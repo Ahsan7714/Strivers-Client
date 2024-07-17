@@ -1,0 +1,42 @@
+.accordion {
+    width: 100%;
+    max-width: 80%;
+    margin: 0 auto;
+    padding-bottom: 30px;
+  }
+  
+  .accordion-item {
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .accordion-question {
+    background: #f7f7f7;
+    border: none;
+    outline: none;
+    width: 100%;
+    text-align: left;
+    padding: 1em;
+    font-size: 1.4em;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  .arrow-icon {
+    font-size: 1.5em;
+  }
+  
+  
+  .accordion-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    background: #fafafa;
+    padding: 0 1em;
+    font-size: 1.2rem;
+    font-weight: 400;
+  }
+  
+  .accordion-answer.open {
+    max-height: 200px; /* Adjust based on content height */
+    padding: 1em;
+  }
+  

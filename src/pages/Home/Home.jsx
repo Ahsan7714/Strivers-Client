@@ -1,12 +1,15 @@
 import React from "react";
-import logo from "../../assets/profile.png";
+import logo from "../../assets/toplogo.png";
 import "./Home.css";
+import Courses from "../../components/Courses/Courses";
+import FAQs from "../../components/FAQs/FAQs";
+import Rewiews from "../../components/Reviews/Rewiews";
 
 const Home = () => {
   return (
     <div className="font-sans leading-normal tracking-normal ">
       {/* Header */}
-      <header className=" flex justify-between items-center px-4 py-5 shadow-xl ">
+      <header className=" flex justify-between items-center px-4  shadow-xl ">
         <div>
           <img src={logo} alt="" className=" w-[200px]" />
         </div>
@@ -34,7 +37,7 @@ const Home = () => {
         <div className="absolute inset-0 bg-black bg-opacity-50"></div>
         <div className="relative z-10 p-8 text-white rounded animate-fade-in-down">
           <h1 className="text-5xl font-bold">
-            Achieve Your Dental License with Striver
+            Achieve Your Dental License with Dental Strivers
           </h1>
           <p className="text-2xl mt-4">
           Striver is dedicated to helping international dental professionals develop the expertise required to excel in the NDEB examinations. Our program provides comprehensive training and resources to ensure success.
@@ -45,12 +48,15 @@ const Home = () => {
         </div>
       </section>
 
+      {/* our courses */}
+      <Courses/>
+
       {/* Features Section */}
       <section className="pt-16 bg-gray-100">
         <div className="max-w-7xl mx-auto text-center ">
           <div className=" flex flex-col items-center justify-center gap-3"> 
 
-          <h2 className="text-4xl font-bold">Why Choose Strivers?</h2>
+          <h2 className="text-4xl font-bold">Why Choose Dental Strivers?</h2>
           <p className=" bg-[#508a7e] text-[#508a7e] w-20 h-1 text-center"></p>
           </div>
         </div>
@@ -106,51 +112,13 @@ const Home = () => {
           </section>
         </div>
       </section>
+      {/*  */}
 
-      {/* Testimonials Section */}
-      {/* <section className="py-16 bg-gradient-to-r from-blue-500 to-purple-500 text-white">
-        <div className="max-w-7xl mx-auto text-center mb-12">
-          <h2 className="text-4xl font-bold">What Our Students Say</h2>
-        </div>
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-white text-gray-800 p-8 rounded shadow-lg transform hover:scale-105 transition-transform duration-300">
-            <p className="italic">
-              "Striver's course was exactly what I needed to pass my exams!"
-            </p>
-            <div className="mt-4 text-right">
-              <p className="font-bold">- John Doe</p>
-            </div>
-          </div>
-          <div className="bg-white text-gray-800 p-8 rounded shadow-lg transform hover:scale-105 transition-transform duration-300">
-            <p className="italic">
-              "The instructors were knowledgeable and the materials were
-              top-notch."
-            </p>
-            <div className="mt-4 text-right">
-              <p className="font-bold">- Jane Smith</p>
-            </div>
-          </div>
-        </div>
-      </section> */}
 
-      {/* Course Outline Section */}
-      {/* <section className="py-10 bg-gray-100">
-        <div className="max-w-7xl mx-auto text-center mb-12">
-          <h2 className="text-4xl font-bold">Course Outline</h2>
-        </div>
-        <div className="max-w-4xl mx-auto">
-          <p className="text-lg">
-            Our 5-month curriculum covers essential topics including:
-          </p>
-          <ul className="list-disc list-inside mt-4 text-left mx-auto max-w-3xl">
-            <li>Introduction to Dentistry</li>
-            <li>Clinical Procedures</li>
-            <li>Dental Anatomy</li>
-            <li>Patient Management</li>
-            <li>Exam Preparation and Practice Tests</li>
-          </ul>
-        </div>
-      </section> */}
+      <Rewiews/>
+      <FAQs/>
+
+  
        {/* Call to Action Section */}
        <section className="bg-gradient-to-r from-[#325040] to-[#65bdb1] text-white py-16 text-center">
         <h2 className="text-4xl font-bold">Ready to Get Started?</h2>

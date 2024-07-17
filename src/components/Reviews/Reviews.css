@@ -1,0 +1,134 @@
+.reviewCardSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+    overflow: hidden; /* Ensure overflow is hidden */
+    margin-bottom: -2%;
+  }
+  
+  .reviewCardSection .review-header h2 {
+    font-size: 3rem;
+    font-weight: 600;
+    color: #3a5d84;
+    font-family: 'Outfit';
+    margin-top: 5%;
+    text-transform: capitalize;
+  }
+  
+  .carousel-item {
+    background: #bcc7d4;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    width: 95%;
+    height: 280px; 
+    /* height: auto; */
+    border-radius: 10px;
+    padding: 5%;
+    
+  }
+  
+  .reviewCard-1 {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  .reviewCard-1 p{
+    font-size: 18px;
+    /* padding: 2rem 2rem; */
+    padding: 20px;
+    font-weight: 400;
+  
+  }
+  .comma-img{
+  
+    position:absolute;
+    display: flex;
+  }
+  
+  .reviewCard-2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .reviewCardA-2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    
+  }
+  
+  .reviewCardA-2-name {
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+  }
+  
+  .reviewCardA-2-name h3 {
+    font-size: 24px;
+    color: #3a5d84;
+    font-weight: 550;
+  }
+  
+  .reviewCardA-2-name span {
+    font-size: 18px;
+  }
+  
+  .reviewCardA-2-img {
+    height: 60px;
+    width: 60px;
+  }
+  
+  
+  
+  .reviewCardSection .react-multi-carousel-track {
+    height: 563px;
+  }
+  .reviewCardSection .react-multiple-carousel__arrow--left {
+    left: calc(45.5% + 1px);
+  }
+  .reviewCardSection .react-multiple-carousel__arrow--right {
+    right: calc(45.5% + 1px);
+  }
+  
+  .reviewCardSection .react-multiple-carousel__arrow{
+    bottom: 13.5%
+  }
+  
+  @media screen and (max-width: 768px) {
+    .reviewCardSection{
+      margin-bottom: -10%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    
+    }
+    .reviewCardSection .carousel-item{
+      height: 300px;
+    
+    }
+    .reviewCardSection .review-header h2{
+      text-align: center;
+      font-size: 30px;
+    }
+    .reviewCardSection .react-multiple-carousel__arrow--left {
+      left: calc(33.5% + 1px);
+    }
+    .reviewCardSection .react-multiple-carousel__arrow--right {
+      right: calc(33.5% + 1px);
+    }
+    .reviewCardSection .react-multiple-carousel__arrow{
+      bottom: 1%
+    }
+  }
+  .reviewCardSection .react-multi-carousel-track{
+    height: 400px;
+  }
