@@ -71,87 +71,9 @@
     color: #fff;
   }
   
-  /* events.css */
-  .events-section {
-    padding: 40px 20px;
-    background-color: #f9f9f9;
-    text-align: center;
-  }
   
-  .hero-section {
-    margin-bottom: 40px;
-    background-image: url('https://media.istockphoto.com/id/1339787499/photo/empty-dark-blue-studio-room-with-light-and-shadow-abstract-background-copy-space-studio-room.jpg?b=1&s=612x612&w=0&k=20&c=9ERC58j5zAEfISv_uhShkq0cBkg4MelqokeJ0MAQmFc='); /* Replace with a valid image URL */
-    background-size: cover;
-    background-position: center;
-    padding: 60px 20px;
-    color: white;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
-    border-radius: 8px;
-  }
+ 
   
-  .hero-section h1 {
-    font-size: 36px;
-    margin-bottom: 10px;
-  }
-  
-  .hero-section p {
-    font-size: 18px;
-  }
-  
-  .event-cards-1{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 0 20px;
-  }
-  
-  .event-card-1{
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    text-align: left;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .event-card-1:hover {
-    /* transform: translateY(-5px); */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  }
-  
-  .event-card-1 img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-  }
-  
-  .event-info-1 {
-    padding: 15px;
-  }
-  
-  .event-info-1 h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-    color: #333;
-  }
-  
-  .event-info-1 p {
-    font-size: 14px;
-    color: #555;
-  }
-  
-  .event-link-1 {
-    display: inline-block;
-    margin-top: 10px;
-    color: #007bff;
-    text-decoration: none;
-    font-weight: 600;
-  }
-  
-  .event-link-1:hover {
-    /* text-decoration: underline; */
-  }
   
   @media screen and (max-width:414px) {
   .product-grid-a {

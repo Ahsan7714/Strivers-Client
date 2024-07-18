@@ -1,34 +1,20 @@
 import React from "react";
-import logo from "../../assets/toplogo.png";
 import "./Home.css";
 import Courses from "../../components/Courses/Courses";
 import FAQs from "../../components/FAQs/FAQs";
 import Rewiews from "../../components/Reviews/Rewiews";
+import Navbar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer/Footer";
 
 const Home = () => {
   return (
     <div className="font-sans leading-normal tracking-normal ">
       {/* Header */}
-      <header className=" flex justify-between items-center px-4  shadow-xl ">
-        <div>
-          <img src={logo} alt="" className=" w-[200px]" />
-        </div>
-        <nav>
-          <a href="#" className="mx-4 hover:underline">
-            Home
-          </a>
-          <a href="#" className="mx-4 hover:underline">
-            About Us
-          </a>
-          <button className="bg-white text-blue-600 px-4 py-2 rounded ml-4 hover:bg-gray-200">
-            Login/Register
-          </button>
-        </nav>
-      </header>
+      <Navbar />
 
       {/* Hero Section */}
       <section
-        className="relative bg-no-repeat bg-cover bg-center h-screen flex items-center justify-center text-center"
+        className="relative bg-no-repeat bg-cover bg-center h-[70vh] lg:h-screen flex items-center justify-center text-center"
         style={{
           backgroundImage:
             "url('https://images.pexels.com/photos/287237/pexels-photo-287237.jpeg?auto=compress&cs=tinysrgb&w=600')",
@@ -36,43 +22,42 @@ const Home = () => {
       >
         <div className="absolute inset-0 bg-black bg-opacity-50"></div>
         <div className="relative z-10 p-8 text-white rounded animate-fade-in-down">
-          <h1 className="text-5xl font-bold">
+          <h1 className="text-4xl lg:text-5xl font-bold text-white">
             Achieve Your Dental License with Dental Strivers
           </h1>
-          <p className="text-2xl mt-4">
-          Striver is dedicated to helping international dental professionals develop the expertise required to excel in the NDEB examinations. Our program provides comprehensive training and resources to ensure success.
+          <p className="text-xl lg:text-2xl mt-4 text-white">
+            Striver is dedicated to helping international dental professionals
+            develop the expertise required to excel in the NDEB examinations.
+            Our program provides comprehensive training and resources to ensure
+            success.
           </p>
-          <button className="bg-[#2ed0be] text-white px-8 py-3 rounded mt-6 hover:from-purple-500 hover:to-blue-500 transform hover:scale-105 transition duration-300">
+          <button className="bg-[#2ed0be] text-white px-8 py-3 rounded mt-6  transform hover:scale-105 transition duration-300">
             Enroll Now
           </button>
         </div>
       </section>
 
       {/* our courses */}
-      <Courses/>
+      <Courses />
 
       {/* Features Section */}
       <section className="pt-16 bg-gray-100">
         <div className="max-w-7xl mx-auto text-center ">
-          <div className=" flex flex-col items-center justify-center gap-3"> 
-
-          <h2 className="text-4xl font-bold">Why Choose Dental Strivers?</h2>
-          <p className=" bg-[#508a7e] text-[#508a7e] w-20 h-1 text-center"></p>
+          <div className=" flex flex-col items-center justify-center gap-3">
+            <h2 className="text-4xl font-bold">Why Choose Dental Strivers?</h2>
+            <p className=" bg-[#508a7e] text-[#508a7e] w-20 h-1 text-center"></p>
           </div>
         </div>
         <div className=" flex flex-col justify-center items-center">
           <section class="health-products-a">
             <div class="product-grid-a">
-              
               <div class="product-card-a">
                 <img
                   src="https://images.pexels.com/photos/669228/pexels-photo-669228.jpeg?auto=compress&cs=tinysrgb&w=600"
                   alt="Product 2"
                 />
                 <h2>5-Month Comprehensive Course</h2>
-                <p>
-                A structured program to cover all essential topics.
-                </p>
+                <p>A structured program to cover all essential topics.</p>
               </div>
               <div class="product-card-a">
                 <img
@@ -80,25 +65,20 @@ const Home = () => {
                   alt="Product 1"
                 />
                 <h2>Live Zoom Sessions</h2>
-                <p>
-                  {" "}
-                  Interactive sessions with experienced instructors.
-                </p>
+                <p> Interactive sessions with experienced instructors.</p>
               </div>
               <div class="product-card-a flex flex-col">
                 <div className=" flex-1">
-                <img
-                  src="https://media.istockphoto.com/id/1165702596/photo/pdf.jpg?b=1&s=612x612&w=0&k=20&c=dnf26xU4iuVsIURQngliQrDMG45SuFzkngUgQW0ABMc="
-                  alt="Product 3"
-                />
+                  <img
+                    src="https://media.istockphoto.com/id/1165702596/photo/pdf.jpg?b=1&s=612x612&w=0&k=20&c=dnf26xU4iuVsIURQngliQrDMG45SuFzkngUgQW0ABMc="
+                    alt="Product 3"
+                  />
                 </div>
-                
+
                 <div className=" flex-1">
-                <h2>Detailed PDF Notes</h2>
-                <p>
-                High-quality notes from live Zoom sessions.
-                </p>
-                </div>     
+                  <h2>Detailed PDF Notes</h2>
+                  <p>High-quality notes from live Zoom sessions.</p>
+                </div>
               </div>
               <div class="product-card-a">
                 <img
@@ -114,13 +94,11 @@ const Home = () => {
       </section>
       {/*  */}
 
+      <Rewiews />
+      <FAQs />
 
-      <Rewiews/>
-      <FAQs/>
-
-  
-       {/* Call to Action Section */}
-       <section className="bg-gradient-to-r from-[#325040] to-[#65bdb1] text-white py-16 text-center">
+      {/* Call to Action Section */}
+      <section className="bg-gradient-to-r from-[#325040] to-[#65bdb1] text-white py-16 text-center">
         <h2 className="text-4xl font-bold">Ready to Get Started?</h2>
         <button className="bg-white text-blue-600 px-8 py-3 rounded mt-6 hover:bg-gray-200 transform hover:scale-105 transition duration-300">
           Enroll Now
@@ -128,106 +106,85 @@ const Home = () => {
       </section>
       {/*  */}
       <div className="">
-        <div>
-          <div className="bg-gray-100 flex justify-center" id="contact-us">
-      <div className="flex lg:flex-row flex-col bg-white shadow-xl rounded-lg lg:w-[45%] w-[100%]   my-20 ">
-        <div className=" ">
-          <form  className="flex flex-col px-8 gap-8 py-5">
-            <div>
-              <h1 className="text-[35px] text-[#10275b] font-bold py-4">
-                Contact us
-              </h1>
-              <p className="text-[18px] pb-3">
-                We're open for any suggestion or just to have a chat
-              </p>
-            </div>
+          <div className="bg-gray-100 flex justify-center mt-10 lg:mt-0" id="contact-us">
+            <div className="flex lg:flex-row flex-col bg-white shadow-xl rounded-lg lg:w-[45%] w-[95%]   lg:my-20 ">
+              <div className=" ">
+                <form className="flex flex-col px-8 gap-8 py-5">
+                  <div>
+                    <h1 className="text-[35px] text-[#10275b] font-bold py-4">
+                      Contact us
+                    </h1>
+                    <p className="text-[18px] pb-3">
+                      We're open for any suggestion or just to have a chat
+                    </p>
+                  </div>
 
-            <div className="flex flex-col gap-2">
-              <label htmlFor="name" className="text-[15px] text-[#80808096]">
-                Name*
-              </label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                
-                required
-                placeholder="Your name"
-                className=" outline-none border-b-2 border-[#00000046]  py-2 w-[100%]"
-              />
-            </div>
-            <div className="flex flex-col gap-2">
-              <label htmlFor="email" className="text-[15px] text-[#80808096]">
-                Email*
-              </label>
-              <input
-                type="text"
-                name="email"
-                id="email"
-               
-                required
-                placeholder="Your Email"
-                className=" outline-none border-b-2 border-[#00000046]  py-2 w-[100%]"
-              />
-            </div>
+                  <div className="flex flex-col gap-2">
+                    <label
+                      htmlFor="name"
+                      className="text-[15px] text-[#80808096]"
+                    >
+                      Name*
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      id="name"
+                      required
+                      placeholder="Your name"
+                      className=" outline-none border-b-2 border-[#00000046]  py-2 w-[100%]"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label
+                      htmlFor="email"
+                      className="text-[15px] text-[#80808096]"
+                    >
+                      Email*
+                    </label>
+                    <input
+                      type="text"
+                      name="email"
+                      id="email"
+                      required
+                      placeholder="Your Email"
+                      className=" outline-none border-b-2 border-[#00000046]  py-2 w-[100%]"
+                    />
+                  </div>
 
-           
+                  <div className="flex flex-col gap-2">
+                    <label
+                      htmlFor="message"
+                      className="text-[15px] text-[#80808096]"
+                    >
+                      Message*
+                    </label>
+                    <textarea
+                      name="message"
+                      id="message"
+                      required
+                      cols="10"
+                      rows="3"
+                      placeholder="Enter your message"
+                      className=" outline-none border-b-2 border-[#00000046]  py-2 w-[100%]"
+                    ></textarea>
+                  </div>
 
-            <div className="flex flex-col gap-2">
-              <label htmlFor="message" className="text-[15px] text-[#80808096]">
-                Message*
-              </label>
-              <textarea
-                name="message"
-                id="message"
-                
-                required
-                cols="10"
-                rows="3"
-                placeholder="Enter your message"
-                className=" outline-none border-b-2 border-[#00000046]  py-2 w-[100%]"
-              ></textarea>
-            </div>
-
-            <div>
-              <button className="bg-[#65bdb1] font-semibold text-white h-[50px] w-[160px] rounded-md shadow-lg font-poppins">
-                Send Message
-              </button>
-            </div>
-          </form>
+                  <div>
+                    <button className="bg-[#65bdb1] font-semibold text-white h-[50px] w-[160px] rounded-md shadow-lg font-poppins">
+                      Send Message
+                    </button>
+                  </div>
+                </form>
+              </div>
+          </div>
         </div>
-        {/* <div className="flex-1">
-          <img src={img} alt="" className=" rounded-e-lg hidden lg:block" />
-        </div> */}
       </div>
-
-    </div>
-        </div>
-
-      </div>
-
-     
 
       {/* contact us form */}
-      
 
       {/* Footer */}
-      <footer className="bg-[#508a7e] text-white py-8">
-        <div className="text-center">
-          <div className="mb-4">
-            <a href="#" className="mx-2 hover:underline">
-              Home
-            </a>
-            <a href="#" className="mx-2 hover:underline">
-              About Us
-            </a>
-            <a href="#" className="mx-2 hover:underline">
-              Contact
-            </a>
-          </div>
-          <p>&copy; 2024 Striver. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
