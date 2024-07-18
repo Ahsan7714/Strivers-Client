@@ -62,10 +62,10 @@ const Rewiews = () => {
   return (
     <div className=" py-14">
       <div className=" flex flex-col items-center justify-center gap-3">
-        <h2 className="text-4xl font-bold">What our students says?</h2>
+        <h2 className="text-4xl font-bold text-center px-4">What our students says?</h2>
         <p className=" bg-[#508a7e] text-[#508a7e] w-20 h-1 text-center"></p>
       </div>
-      <div className=' py-8'>
+      <div className=' py-8 mx-auto ml-5'>
       <Carousel
         responsive={responsive}
         infinite={true}
