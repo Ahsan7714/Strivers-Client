@@ -10,19 +10,19 @@ const Navbar = () => {
       </Link>
       <nav className=" flex items-center">
         <div className=" flex">
-          <a
-            href="#"
+          <Link
+            to="/"
             className="mx-4 lg:flex hidden text-[20px] font-semibold link"
           >
             Home
-          </a>
+          </Link>
 
-          <a
-            href="#"
+          <Link
+            to="about-us"
             className="mx-4  lg:flex hidden text-[20px] font-semibold link"
           >
             About Us
-          </a>
+          </Link>
         </div>
 
         <button className="bg-[#8a9866] text-white font-semibold  px-4 py-2 rounded ml-4 hover:bg-[#78845a]">
