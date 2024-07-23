@@ -63,7 +63,7 @@ const AdminSidebar = () => {
         >
           <p>Courses</p>
         </Link>
-        <Link
+        {/* <Link
           to="/user/profile"
           className={`
         ${
@@ -74,7 +74,7 @@ const AdminSidebar = () => {
         flex gap-2 items-center text-[20px] h-10 px-4 rounded-md`}
         >
           <p>Profile</p>
-        </Link>
+        </Link> */}
         
       </div>
     </div>

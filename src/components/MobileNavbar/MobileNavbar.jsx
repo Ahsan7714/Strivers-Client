@@ -35,7 +35,7 @@ const MobileNavbar = () => {
         ${
           location.pathname == "/user/my-course" ||
           location.pathname == "/user/my-course/content" 
-            ? "bg-gradient-to-r from-[#99b84c] to-[#b4c883] text-white "
+            ? "bg-gradient-to-r from-[#2b5870] to-[#6a97af] text-white "
             : "text-[#000000a5] "
         }
         flex gap-2 items-center text-[20px] h-10 px-4 rounded-md`}
@@ -47,7 +47,7 @@ const MobileNavbar = () => {
           className={`
         ${
           location.pathname == "/user/packages"
-            ? "bg-gradient-to-r from-[#99b84c] to-[#b4c883] text-white "
+            ? "bg-gradient-to-r from-[#2b5870] to-[#6a97af] text-white "
             : "text-[#000000a5] "
         }
         flex gap-2 items-center text-[20px] h-10 px-4 rounded-md`}
@@ -56,29 +56,29 @@ const MobileNavbar = () => {
         </Link>
      
         <Link
-          to="/clients"
+          to="/user/courses"
           className={`
         ${
-          location.pathname == "/clients"
-            ? "bg-gradient-to-r from-[#003268] to-[#006ee8] text-white "
+          location.pathname == "/user/courses"
+            ? "bg-gradient-to-r from-[#2b5870] to-[#6a97af] text-white "
             : "text-[#000000a5] "
         }
         flex gap-2 items-center text-[20px] h-10 px-4 rounded-md`}
         >
           <p>Courses</p>
         </Link>
-        <Link
-          to="/chat"
+        {/* <Link
+          to="/user/profile"
           className={`
         ${
-          location.pathname == "/chat"
-            ? "bg-gradient-to-r from-[#003268] to-[#006ee8] text-white "
+          location.pathname == "/user/profile"
+            ? "bg-gradient-to-r from-[#2b5870] to-[#6a97af] text-white "
             : "text-[#000000a5] "
         }
         flex gap-2 items-center text-[20px] h-10 px-4 rounded-md`}
         >
           <p>Profile</p>
-        </Link>
+        </Link> */}
         
       </div>
     </div>
