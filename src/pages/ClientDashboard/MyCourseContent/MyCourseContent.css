@@ -1,0 +1,87 @@
+/* MyCourseContent.css */
+.pdf-container {
+    position: relative;
+    overflow: hidden;
+  }
+  .pdf-container canvas {
+    pointer-events: none; /* Disable interactions with the canvas */
+  }
+  .modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 800px;
+    position: relative;
+  }
+  
+  .close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .close-button:hover,
+  .close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .pdf-container {
+    height: 500px; /* Adjust as necessary */
+  }
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0);
+    pointer-events: none; /* Disable pointer events to allow PDF interaction */
+  }    
+  /* Custom scrollbar for the sidebar */
+.sidebar-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  .sidebar-scrollbar::-webkit-scrollbar-track {
+    background: #f8fafb;
+  }
+  
+  .sidebar-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #a0aec0;
+    border-radius: 4px;
+  }
+  
+  /* Custom scrollbar for the right page content */
+  .content-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .content-scrollbar::-webkit-scrollbar-track {
+    background: #f8fafb;
+  }
+  
+  .content-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #427590;
+    border-radius: 4px;
+  }
+  

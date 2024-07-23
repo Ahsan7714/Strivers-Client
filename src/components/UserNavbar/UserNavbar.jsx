@@ -1,9 +1,9 @@
 import React from "react";
 import logo from "../../assets/toplogo.png";
 import { Link } from "react-router-dom";
-import "./Navbar.css";
+// import "./Navbar.css";
 import { useAuthPopUp } from "../../Context/AuthPopUpContext";
-const Navbar = () => {
+const UserNavbar = () => {
   const { onOpen } = useAuthPopUp();
 
   const { setShowModal, setType } = useAuthPopUp();
@@ -25,25 +25,15 @@ const Navbar = () => {
         <div className=" flex">
           <Link
             to="/"
-            className="mx-4 lg:flex hidden text-[20px] font-semibold link"
+            className="mx-4 lg:flex  text-[20px] font-semibold link"
           >
             Home
           </Link>
-
-          <Link
-            to="about-us"
-            className="mx-4  lg:flex hidden text-[20px] font-semibold link"
-          >
-            About Us
-          </Link>
+         
         </div>
-
-        <button onClick={() => handleShowPopUp("signUp")} className="bg-[#8a9866] text-white font-semibold  px-4 py-2 rounded ml-4 hover:bg-[#78845a]">
-          Login/Register
-        </button>
       </nav>
     </header>
   );
 };
 
-export default Navbar;
+export default UserNavbar;

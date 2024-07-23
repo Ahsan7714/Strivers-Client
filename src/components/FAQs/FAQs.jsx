@@ -24,7 +24,7 @@ const FAQs = () => {
 
   return (
     <div className='text-black'>
-      <div className='bg-[#508a7e] text-white mb-10 p-12'>
+      <div className='bg-[#34647e] text-white mb-10 p-12'>
         <div className='flex flex-col gap-2'>
           <h1 className='font-bold text-[35px]'>Have questions?</h1>
           <p className='text-[22px]'>Visit our FAQ section for quick answers to your questions.</p>

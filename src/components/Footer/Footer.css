@@ -1,5 +1,5 @@
 .footer {
-    background-color: #f8f9fa;
+    background-color: #427590;
   }
   
   .top-footer {
@@ -9,7 +9,7 @@
     align-items: center;
     text-align: center;
     
-    background: #3b675eed;
+    background: #427590;
     height: 10vh;
   }
   .left-footer{
@@ -47,7 +47,7 @@
   
   .bottom-footer {
     text-align: center;
-    background: #3b675e;
+    background: #285c78;
     color: rgba(255, 255, 255, 1);
     font-size: 15px;
     align-items: center;
@@ -55,7 +55,19 @@
 
   }
 
-
+  .disclaimer {
+    /* margin-top: 20px; */
+    font-size: 12px;
+    line-height: 1.5;
+    color: white;
+    border-top: 1px solid #555;
+    padding-top: 10px;
+  }
+  
+  .disclaimer p {
+    margin: 0;
+  }
+  
 
 
   @media screen and (max-width:786px) {

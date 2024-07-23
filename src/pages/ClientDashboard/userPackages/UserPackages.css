@@ -1,28 +1,28 @@
-.health-products-b {
+.product-grid-pkg {
     text-align: center;
-    padding: 50px 20px;
+ margin: 20px 0px;
   }
   
-  .health-products-b h1 {
-    font-size: 2.5em;
+  .product-grid-pkg h1 {
+    font-size: 1px;
     /* color: #333; */
   }
   
-  .health-products-b p {
-    font-size: 1.2em;
+  .product-grid-pkg  p {
+    font-size: 10px;
     color: #666;
     margin-bottom: 30px;
   }
   
-  .product-grid-b {
+  .product-grid-pkg {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    max-width: 1200px;
+    gap: 10px;
+    max-width: 1000px;
     margin: 0 auto;
   }
   
-  .product-card-b {
+  .product-grid-pkg {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -30,39 +30,35 @@
     transition: transform 0.2s;
   }
   
-  .product-card-b:hover {
-    transform: scale(1.01);
-    box-shadow: 0 16px 20px rgba(0,0,0,0.1);
-  }
   
-  .product-card-b img {
+  .product-grid-pkg img {
     width: 100%;
-    height: 240px;
+    height: 170px;
     display: block;
     object-fit: cover;
   }
   
-  .product-card-b h2 {
-    font-size: 1.5em;
+  .product-grid-pkg h2 {
+    font-size: 0.9em;
     color: #333;
     margin: 15px 0 10px;
   }
   
-  .product-card-b p {
+  .product-grid-pkg p {
     font-size: 1em;
     color: #666;
     padding: 0 15px 15px;
   }
   
   @media screen and (max-width:414px) {
-    .product-grid-b {
+    .product-grid-pkg {
       display:flex;
       flex-direction: column;
     }
     
     }
-    @media screen and (max-width:430px) {
-    .product-grid-b {
+    @media screen and (max-width:px) {
+    .product-grid-pkg {
       display:flex;
       flex-direction: column;
     }
