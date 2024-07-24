@@ -79,8 +79,8 @@ function UserCourse() {
           <AdminMobileNavbar />
         </>
       )}
-      <div className="ml-[23%] w-[77%] pt-[3%]">
-        <div className="w-[77%] mx-auto p-5">
+      <div className="lg:ml-[23%] w-[77%] pt-[3%]">
+        <div className="lg:w-[77%] w-[115%] lg:mx-auto p-5">
           <h1 className="text-[30px] font-semibold py-3">Active Courses</h1>
           <div className="flex gap-4 mb-4">
             <TextField

@@ -77,8 +77,8 @@ function PostContent() {
           <AdminMobileNavbar />
         </>
       )}
-      <div className="ml-[23%] w-[77%] pt-[3%]">
-        <div className="w-[77%] mx-auto p-5">
+      <div className="lg:ml-[23%] w-[77%] pt-[3%]">
+        <div className="lg:w-[77%] mx-auto p-5">
           <h1 className="text-[30px] font-semibold py-3">
             Post Course Content
           </h1>

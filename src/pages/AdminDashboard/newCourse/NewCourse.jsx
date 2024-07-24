@@ -79,9 +79,9 @@ function NewCourse() {
           <AdminMobileNavbar />
         </>
       )}
-      <div className="ml-[24%] w-[76%]">
+      <div className="lg:ml-[24%] w-[76%]">
         <form onSubmit={handleSubmit}>
-          <div className="bg-[#f8fafb] rounded-md shadow-lg w-[70%] mx-auto my-5 flex flex-col p-4">
+          <div className="bg-[#f8fafb] rounded-md shadow-lg lg:w-[70%] mx-auto my-5 flex flex-col p-4">
             <h1 className="text-[30px] font-semibold pb-7 text-center">
               Add Course
             </h1>

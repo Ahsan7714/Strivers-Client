@@ -77,8 +77,8 @@ function User() {
           <AdminMobileNavbar />
         </>
       )}
-      <div className="ml-[23%] w-[77%] pt-[3%]">
-        <div className="w-[77%] mx-auto p-5">
+      <div className="lg:ml-[23%] lg:w-[77%] pt-[3%]">
+        <div className="lg:w-[77%]  w-full mx-auto p-5">
           <h1 className="text-[30px] font-semibold py-3">Active Users</h1>
           <div >
             <Paper sx={{ width: "100%", overflow: "hidden" }}>
