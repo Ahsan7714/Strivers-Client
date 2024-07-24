@@ -3,13 +3,13 @@ import AdminSidebar from "../../../components/AdminSidebar/AdminSidebar";
 import AdminMobileNavbar from "../../../components/adminMobileNavbar/AdminMobileNavbar";
 import "./NewCourse.css";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import { InputAdornment, TextField } from "@mui/material";
+import { BsCurrencyDollar } from "react-icons/bs";
 
 function NewCourse() {
   const [title, setTitle] = useState("");
-  const [canadianStandard, setCanadianStandard] = useState("");
-  const [canadianPremium, setCanadianPremium] = useState("");
-  const [internationalStandard, setInternationalStandard] = useState("");
-  const [internationalPremium, setInternationalPremium] = useState("");
+  const [standardPrice, setStandardPrice] = useState("");
+  const [premiumPrice, setPremiumPrice] = useState("");
   const [description, setDescription] = useState("");
   const [photo, setPhoto] = useState(null);
   const [screenSize, setScreenSize] = useState(window.innerWidth);
@@ -20,7 +20,7 @@ function NewCourse() {
       features: [
         "5 month course",
         "Highly qualified successful mentors",
-        "weekly performance review",
+        "Weekly performance review",
         "Live discussion of criteria and demos (Twice a week)",
       ],
       link: "/user/my-course/content",
@@ -32,7 +32,7 @@ function NewCourse() {
       features: [
         "5 month course",
         "Highly qualified successful mentors",
-        "weekly performance review",
+        "Weekly performance review",
         "Live discussion of criteria and demos (Twice a week)",
       ],
       link: "/user/my-course/content",
@@ -59,10 +59,8 @@ function NewCourse() {
     e.preventDefault();
     console.log({
       title,
-      canadianStandard,
-      canadianPremium,
-      internationalStandard,
-      internationalPremium,
+      standardPrice,
+      premiumPrice,
       description,
       photo,
     });
@@ -98,49 +96,38 @@ function NewCourse() {
               />
             </div>
             <div className="mb-4">
-              <div className="flex justify-between gap-4">
-                <div className="w-1/2">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Price for Canadian Students
-                  </label>
-                  <div className="flex gap-4">
-                    <input
-                      type="number"
-                      value={canadianStandard}
-                      onChange={(e) => setCanadianStandard(e.target.value)}
-                      placeholder="Standard"
-                      className="mt-1 block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    />
-                    <input
-                      type="number"
-                      value={canadianPremium}
-                      onChange={(e) => setCanadianPremium(e.target.value)}
-                      placeholder="Premium"
-                      className="mt-1 block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    />
-                  </div>
-                </div>
-                <div className="w-1/2">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Price for International Students
-                  </label>
-                  <div className="flex gap-4">
-                    <input
-                      type="number"
-                      value={internationalStandard}
-                      onChange={(e) => setInternationalStandard(e.target.value)}
-                      placeholder="Standard"
-                      className="mt-1 block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    />
-                    <input
-                      type="number"
-                      value={internationalPremium}
-                      onChange={(e) => setInternationalPremium(e.target.value)}
-                      placeholder="Premium"
-                      className="mt-1 block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    />
-                  </div>
-                </div>
+              <label className="block text-sm font-medium text-gray-700">
+                Price of Course
+              </label>
+              <div className="flex gap-6">
+                <TextField
+                  type="number"
+                  value={standardPrice}
+                  onChange={(e) => setStandardPrice(e.target.value)}
+                  placeholder="Standard"
+                  className="mt-1 block w-1/2 bg-white"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <BsCurrencyDollar />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                <TextField
+                  type="number"
+                  value={premiumPrice}
+                  onChange={(e) => setPremiumPrice(e.target.value)}
+                  placeholder="Premium"
+                  className="mt-1 block w-1/2 bg-white"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <BsCurrencyDollar />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
               </div>
             </div>
             <div className="mb-4">
@@ -157,7 +144,7 @@ function NewCourse() {
             </div>
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">
-                Photo
+                Choose Image
               </label>
               <input
                 type="file"
@@ -173,10 +160,12 @@ function NewCourse() {
             </button>
           </div>
         </form>
-        
-        <div className="flex flex-col w-full h-[80vh] overflow-y-auto content-scrollbar">
+
+        <div className="flex flex-col w-full overflow-hidden content-scrollbar">
           <div className="main-content w-full lg:px-7">
-            <h1 className="text-center text-[30px] font-bold py-5">Active Courses</h1>
+            <h1 className="text-center text-[30px] font-bold py-5">
+              Active Courses
+            </h1>
             <section className="py-7">
               <div className="grid lg:grid-cols-2 grid-cols-1 gap-6 lg:gap-0 items-start justify-start w-full">
                 {AllPackages.map((pkg, index) => (
@@ -195,7 +184,10 @@ function NewCourse() {
                     <div className="h-[100px]">
                       <ul className="text-start">
                         {pkg.features.map((feature, idx) => (
-                          <li key={idx} className="flex items-center pl-4 gap-1">
+                          <li
+                            key={idx}
+                            className="flex items-center pl-4 gap-1"
+                          >
                             <FaLongArrowAltRight />
                             {feature}
                           </li>
@@ -203,9 +195,7 @@ function NewCourse() {
                       </ul>
                     </div>
                     <div className="mt-9 mb-6">
-                      <button
-                        className="bg-[#a0b36d] text-white py-2 px-10 rounded-md"
-                      >
+                      <button className="bg-[#a0b36d] text-white py-2 px-10 rounded-md">
                         Enroll Now
                       </button>
                     </div>

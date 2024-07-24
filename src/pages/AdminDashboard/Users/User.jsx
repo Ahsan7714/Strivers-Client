@@ -128,7 +128,7 @@ function User() {
       </div>
       {modalIsOpen && selectedUser && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-md w-[500px] shadow-lg">
+          <div className="bg-white p-6 rounded-md lg:w-[500px] w-[90%] shadow-lg">
             <div className="flex justify-between items-center">
               <h2 className="text-[24px] font-semibold">
                 <span className="text-[#427590]">{selectedUser.name}</span>
@@ -137,6 +137,9 @@ function User() {
                 <IoMdClose className="text-[30px]" />
               </button>
             </div>
+            <p className="mt-4">
+              <strong>Email:</strong> {selectedUser.email}
+            </p>
             <p className="mt-4">
               <strong>Course:</strong> {selectedUser.course}
             </p>
@@ -153,15 +156,7 @@ function User() {
               >
                 Delete
               </button>
-              <button
-                className="bg-gradient-to-r from-[#2b5870] to-[#6a97af] text-white px-3 py-2 rounded-md"
-                onClick={() => {
-                  // handleApprove(selectedUser.id);
-                  closeModal();
-                }}
-              >
-                Approve
-              </button>
+              
             </div>
           </div>
         </div>
