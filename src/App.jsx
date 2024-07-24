@@ -8,6 +8,11 @@ import UserPackages from './pages/ClientDashboard/userPackages/UserPackages'
 import MyCourse from './pages/ClientDashboard/MyCourse/MyCourse'
 import MyCourseContent from './pages/ClientDashboard/MyCourseContent/MyCourseContent'
 import UserCourses from './pages/ClientDashboard/UserCourses/UserCourses'
+import User from './pages/AdminDashboard/Users/User'
+import RequestUser from './pages/AdminDashboard/reqUser/RequestUser'
+import UserCourse from './pages/AdminDashboard/userCourse/UserCourse'
+import NewCourse from './pages/AdminDashboard/newCourse/NewCourse'
+import PostContent from './pages/AdminDashboard/postContent/PostContent'
 
 function App() {
 
@@ -21,6 +26,11 @@ function App() {
         <Route path='/user/my-course' element={<MyCourse/>}/>
         <Route path='/user/my-course/content' element={<MyCourseContent/>}/>
         <Route path='/user/courses' element={<UserCourses/>}/>
+        <Route path='/dashboard' element={<User/>}/>
+        <Route path='/dashboard/req-users' element={<RequestUser/>}/>
+        <Route path='/dashboard/courses' element={<UserCourse/>}/>
+        <Route path='/dashboard/add-courses' element={<NewCourse/>}/>
+        <Route path='/dashboard/post-content' element={<PostContent/>}/> 
       </Routes>
 
     
