@@ -25,7 +25,7 @@ const Footer = () => {
           </ul>
         </div>
       </div>
-      <div className=" text-gray-100 py-2 px-3 border-[#2c5872] border-t">
+      <div className=" text-gray-100 py-2 px-3 border-[#2c5872] border-t bg-[#427590]">
       <p>
           Disclaimer: Dental Strivers Inc. is not affiliated, associated,
           authorized, endorsed, sponsored, supported or funded in any way by the
