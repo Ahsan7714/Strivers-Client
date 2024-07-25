@@ -3,7 +3,7 @@ import './Whatsapp.css';
 
 const Whatsapp = () => {
   const handleClick = () => {
-    window.open('https://wa.me/+14373135736', '_blank');
+    window.open('https://wa.me/14373135736?text=Hello%20I%20would%20like%20to%20inquire%20about%20your%20services', '_blank');
   };
 
   return (
