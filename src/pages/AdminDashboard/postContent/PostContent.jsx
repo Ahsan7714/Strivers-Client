@@ -1,18 +1,24 @@
 import React, { useState } from "react";
 import AdminSidebar from "../../../components/AdminSidebar/AdminSidebar";
 import AdminMobileNavbar from "../../../components/adminMobileNavbar/AdminMobileNavbar";
+import { Select,MenuItem } from "@mui/material";
 
 function PostContent() {
   const [isPremium, setIsPremium] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState("");
   const [standardContent, setStandardContent] = useState({
+    weekNumber: "",
     lectureNumber: "",
     topic: "",
     link: "",
+    description: "",
   });
   const [premiumContent, setPremiumContent] = useState({
+    weekNumber: "",
     lectureNumber: "",
     topic: "",
     link: "",
+    description: "",
     pdf: null,
   });
   const [screenSize, setScreenSize] = useState(window.innerWidth);
@@ -22,8 +28,8 @@ function PostContent() {
   };
 
   React.useEffect(() => {
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const handleToggleStandard = () => {
@@ -57,6 +63,10 @@ function PostContent() {
     }
   };
 
+  const handleCourseChange = (e) => {
+    setSelectedCourse(e.target.value);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isPremium) {
@@ -82,7 +92,23 @@ function PostContent() {
           <h1 className="text-[30px] font-semibold py-3">
             Post Course Content
           </h1>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">
+              Select Course
+            </label>
+            <Select
+              value={selectedCourse}
+              onChange={handleCourseChange}
+              displayEmpty
+              fullWidth
+            >
+              <MenuItem value="">Select a course...</MenuItem>
+              <MenuItem value="Python">Python</MenuItem>
+              <MenuItem value="Java">Java</MenuItem>
+            </Select>
+          </div>
           <div className="mb-4 flex items-center">
+            <h2 className="text-lg font-medium text-gray-700 mr-4">Select Package</h2>
             <button
               type="button"
               onClick={handleToggleStandard}
@@ -111,6 +137,19 @@ function PostContent() {
               <div className="bg-[#f8fafb] rounded-md shadow-lg p-4">
                 <div className="mb-4">
                   <label className="block text-sm font-medium text-gray-700">
+                    Week Number
+                  </label>
+                  <input
+                    type="number"
+                    name="weekNumber"
+                    value={premiumContent.weekNumber}
+                    onChange={handleChangePremium}
+                    placeholder="Enter week number..."
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700">
                     Lecture Number
                   </label>
                   <input
@@ -137,15 +176,27 @@ function PostContent() {
                 </div>
                 <div className="mb-4">
                   <label className="block text-sm font-medium text-gray-700">
-                    Link
+                    Meet Link
                   </label>
                   <input
                     type="text"
                     name="link"
                     value={premiumContent.link}
                     onChange={handleChangePremium}
-                    placeholder="Enter link to video..."
+                    placeholder="/mocklink"
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Description
+                  </label>
+                  <textarea
+                    value={premiumContent.description}
+                    onChange={handleChangePremium}
+                    placeholder="Write a description ..."
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    rows="4"
                   />
                 </div>
                 <div className="mb-4">
@@ -168,6 +219,19 @@ function PostContent() {
               </div>
             ) : (
               <div className="bg-[#f8fafb] rounded-md shadow-lg p-4">
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Week Number
+                  </label>
+                  <input
+                    type="number"
+                    name="weekNumber"
+                    value={standardContent.weekNumber}
+                    onChange={handleChangeStandard}
+                    placeholder="Enter week number..."
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
                 <div className="mb-4">
                   <label className="block text-sm font-medium text-gray-700">
                     Lecture Number
@@ -196,15 +260,27 @@ function PostContent() {
                 </div>
                 <div className="mb-4">
                   <label className="block text-sm font-medium text-gray-700">
-                    Link
+                    Meet Link
                   </label>
                   <input
                     type="text"
                     name="link"
                     value={standardContent.link}
                     onChange={handleChangeStandard}
-                    placeholder="Enter link to video... "
+                    placeholder="/mocklink"
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Description
+                  </label>
+                  <textarea
+                    value={standardContent.description}
+                    onChange={handleChangeStandard}
+                    placeholder="Write a description ..."
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    rows="4"
                   />
                 </div>
                 <button

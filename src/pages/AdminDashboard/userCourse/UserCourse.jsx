@@ -6,20 +6,22 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Paper, TextField, Select, MenuItem } from "@mui/material";
+import { Paper, Select, MenuItem, Button } from "@mui/material";
 import AdminMobileNavbar from "../../../components/adminMobileNavbar/AdminMobileNavbar";
+import { RiDeleteBinLine } from "react-icons/ri";
 
 function UserCourse() {
-  const [searchCourse, setSearchCourse] = useState("");
+  const [filterCourse, setFilterCourse] = useState("");
   const [filterPackage, setFilterPackage] = useState("");
   const [screenSize, setScreenSize] = useState(window.innerWidth);
+
   const handleResize = () => {
     setScreenSize(window.innerWidth);
   };
 
   React.useEffect(() => {
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const users = [
@@ -53,17 +55,22 @@ function UserCourse() {
     },
   ];
 
-  const handleSearchCourseChange = (event) => {
-    setSearchCourse(event.target.value);
+  const handleFilterCourseChange = (event) => {
+    setFilterCourse(event.target.value);
   };
 
   const handleFilterPackageChange = (event) => {
     setFilterPackage(event.target.value);
   };
 
+  const handleDelete = (userId) => {
+    // Handle delete action here, e.g., remove the user from the list or make an API call
+    console.log(`Delete user with ID: ${userId}`);
+  };
+
   const filteredUsers = users.filter((user) => {
     return (
-      (searchCourse === "" || user.course.toLowerCase().includes(searchCourse.toLowerCase())) &&
+      (filterCourse === "" || user.course === filterCourse) &&
       (filterPackage === "" || user.package === filterPackage)
     );
   });
@@ -83,22 +90,25 @@ function UserCourse() {
         <div className="lg:w-[77%] w-[115%] lg:mx-auto p-5">
           <h1 className="text-[30px] font-semibold py-3">Active Courses</h1>
           <div className="flex gap-4 mb-4">
-            <TextField
-              label="Search by Course"
-              variant="outlined"
-              value={searchCourse}
-              onChange={handleSearchCourseChange}
+            <Select
+              value={filterCourse}
+              onChange={handleFilterCourseChange}
+              displayEmpty
               fullWidth
-            />
+            >
+              <MenuItem value="">All Courses</MenuItem>
+              <MenuItem value="Java">Java</MenuItem>
+              <MenuItem value="Python">Python</MenuItem>
+            </Select>
             <Select
               value={filterPackage}
               onChange={handleFilterPackageChange}
               displayEmpty
               fullWidth
             >
-              <MenuItem value="">All </MenuItem>
-              <MenuItem value="Standard">Standard</MenuItem>
-              <MenuItem value="Premium">Premium</MenuItem>
+              <MenuItem value="">All Packages</MenuItem>
+              <MenuItem value="Standard">Standard Package</MenuItem>
+              <MenuItem value="Premium">Premium Package</MenuItem>
             </Select>
           </div>
           <div>
@@ -122,6 +132,9 @@ function UserCourse() {
                       <TableCell align="center" className="text-white text-lg">
                         Course
                       </TableCell>
+                      <TableCell align="center" className="text-white text-lg">
+                        Actions
+                      </TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -135,6 +148,12 @@ function UserCourse() {
                         <TableCell align="center">{user.email}</TableCell>
                         <TableCell align="center">{user.package}</TableCell>
                         <TableCell align="center">{user.course}</TableCell>
+                        <TableCell align="center">
+                          <RiDeleteBinLine
+                            className="bg-red-500 text-white  p-1 cursor-pointer ml-8 rounded-md text-3xl"
+                            onClick={() => handleDelete(user.id)}
+                          />
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
