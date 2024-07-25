@@ -5,14 +5,22 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
 import logo from "../../assets/toplogo.png";
 
+import { toast } from "react-hot-toast";
+
 
 
 const MobileNavbar = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleLogout = () => {
+    toast.success("Logged out successfully");
+    navigate("/");
   };
 
   return (
@@ -42,7 +50,7 @@ const MobileNavbar = () => {
         >
           <p>My Courses</p>
         </Link>
-        <Link
+        {/* <Link
           to="/user/packages"
           className={`
         ${
@@ -53,7 +61,7 @@ const MobileNavbar = () => {
         flex gap-2 items-center text-[20px] h-10 px-4 rounded-md`}
         >
           <p>Packages</p>
-        </Link>
+        </Link> */}
      
         <Link
           to="/user/courses"
@@ -67,7 +75,19 @@ const MobileNavbar = () => {
         >
           <p>Courses</p>
         </Link>
-        {/* <Link
+        <Link
+          to="/user/payments"
+          className={`
+        ${
+          location.pathname == "/user/payments"
+            ? "bg-gradient-to-r from-[#2b5870] to-[#6a97af] text-white "
+            : "text-[#000000a5] "
+        }
+        flex gap-2 items-center text-[20px] h-10 px-4 rounded-md`}
+        >
+          <p>Payments</p>
+        </Link>
+        <Link
           to="/user/profile"
           className={`
         ${
@@ -78,7 +98,13 @@ const MobileNavbar = () => {
         flex gap-2 items-center text-[20px] h-10 px-4 rounded-md`}
         >
           <p>Profile</p>
-        </Link> */}
+        </Link> 
+        <button
+          onClick={handleLogout}
+          className="flex gap-2 items-center text-[20px] h-10 px-4 rounded-md text-[#000000a5]"
+        >
+          <p>Logout</p>
+        </button>
         
       </div>
     </div>

@@ -4,7 +4,7 @@ import './App.css'
 import Home from './pages/Home/Home'
 import PrivacyPolicy from './pages/PrivacyPolicy/PrivacyPolicy'
 import AboutUs from './pages/AboutUs/AboutUs'
-import UserPackages from './pages/ClientDashboard/userPackages/UserPackages'
+// import UserPackages from './pages/ClientDashboard/userPackages/UserPackages'
 import MyCourse from './pages/ClientDashboard/MyCourse/MyCourse'
 import MyCourseContent from './pages/ClientDashboard/MyCourseContent/MyCourseContent'
 import UserCourses from './pages/ClientDashboard/UserCourses/UserCourses'
@@ -14,6 +14,8 @@ import UserCourse from './pages/AdminDashboard/userCourse/UserCourse'
 import NewCourse from './pages/AdminDashboard/newCourse/NewCourse'
 import PostContent from './pages/AdminDashboard/postContent/PostContent'
 import CourseDetails from './pages/CourseDetails/CourseDetails'
+import UserPayments from './pages/ClientDashboard/Payments/UserPayments'
+import UserProfile from './pages/ClientDashboard/UserProfile/UserProfile'
 
 function App() {
 
@@ -24,10 +26,12 @@ function App() {
         <Route path='/privacy-policy' element={<PrivacyPolicy/>}/>
         <Route path='/about-us' element={<AboutUs/>}/>
         <Route path='/course-details' element={<CourseDetails/>}/>
-        <Route path='/user/packages' element={<UserPackages/>}/>
+        {/* <Route path='/user/packages' element={<UserPackages/>}/> */}
         <Route path='/user/my-course' element={<MyCourse/>}/>
         <Route path='/user/my-course/content' element={<MyCourseContent/>}/>
         <Route path='/user/courses' element={<UserCourses/>}/>
+        <Route path='/user/payments' element={<UserPayments/>}/>
+        <Route path='/user/profile' element={<UserProfile/>}/>
         <Route path='/dashboard' element={<User/>}/>
         <Route path='/dashboard/req-users' element={<RequestUser/>}/>
         <Route path='/dashboard/courses' element={<UserCourse/>}/>
