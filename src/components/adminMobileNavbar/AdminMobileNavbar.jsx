@@ -73,7 +73,7 @@ function AdminMobileNavbar() {
               <p>Courses</p>
             </Link>
             <Link
-              to="/dashboard/courses"
+              to="/dashboard/add-courses"
               className={`
         ${
           location.pathname == "/dashboard/add-courses"

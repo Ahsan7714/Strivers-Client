@@ -8,28 +8,43 @@ const WaterMark= ({ fileUrl }) => {
             {props.canvasLayer.children}
             <div
                 style={{
-                    alignItems: 'center',
-                    display: 'flex',
-                    height: '100%',
-                    justifyContent: 'center',
-                    left: 0,
                     position: 'absolute',
-                    top: 0,
                     width: '100%',
+                    height: '100%',
+                    left: 0,
+                    top: 0,
                 }}
             >
-                <div
-                    style={{
-                        color: 'rgba(0, 0, 0, 0.2)',
-                        fontSize: `${8 * props.scale}rem`,
-                        fontWeight: 'bold',
-                        textTransform: 'uppercase',
-                        transform: 'rotate(-45deg)',
-                        userSelect: 'none',
-                    }}
-                >
-                    Ahmed 
-                </div>
+                {Array.from({ length: 3 }, (_, row) => (
+                    Array.from({ length: 3 }, (_, col) => (
+                        <div
+                            key={`${row}-${col}`}
+                            style={{
+                                position: 'absolute',
+                                top: `${row * 33.33}%`,
+                                left: `${col * 33.33}%`,
+                                width: '33.33%',
+                                height: '33.33%',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                color: 'rgba(0, 0, 0, 0.2)',
+                                fontSize: `${1.5 * props.scale}rem`,
+                                fontWeight: '',
+                                // textTransform: 'uppercase',
+                                transform: 'rotate(-40deg)',
+                                userSelect: 'none',
+                                pointerEvents: 'none',
+                            }}
+                        >
+                             <div className=' text-center'>
+                                <p style={{ margin: 0 }}>Ahmed</p>
+                                <p style={{ margin: 0 }}>{'ahmed@gmail.com'}</p>
+                            </div>
+                        </div>
+                    ))
+                ))}
             </div>
             {props.annotationLayer.children}
             {props.textLayer.children}

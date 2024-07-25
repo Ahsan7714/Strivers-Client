@@ -13,6 +13,7 @@ import RequestUser from './pages/AdminDashboard/reqUser/RequestUser'
 import UserCourse from './pages/AdminDashboard/userCourse/UserCourse'
 import NewCourse from './pages/AdminDashboard/newCourse/NewCourse'
 import PostContent from './pages/AdminDashboard/postContent/PostContent'
+import CourseDetails from './pages/CourseDetails/CourseDetails'
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
         <Route path='/' element={<Home/>}/>
         <Route path='/privacy-policy' element={<PrivacyPolicy/>}/>
         <Route path='/about-us' element={<AboutUs/>}/>
+        <Route path='/course-details' element={<CourseDetails/>}/>
         <Route path='/user/packages' element={<UserPackages/>}/>
         <Route path='/user/my-course' element={<MyCourse/>}/>
         <Route path='/user/my-course/content' element={<MyCourseContent/>}/>

@@ -1,5 +1,6 @@
 import React from 'react'
 import './Courses.css'
+import { Link } from 'react-router-dom'
 
 const Courses = () => {
   return (
@@ -20,8 +21,11 @@ const Courses = () => {
               src="https://acecourses.ca/images/1043.jpg"
               alt="Product 2"
             />
-            <h2 className=' font-semibold'>US And Canadian Universities Bench Exam Preparation.</h2>
-            <button className='bg-gradient-to-r from-[#34647e] to-[#7fa8be] text-white py-2 px-10  my-6 rounded-md'>Register</button>
+            <h2 className=' font-semibold'>AFK (Assessment of Fundamental Knowledge)            </h2>
+            <div className=' my-6'>
+
+            <Link to="/course-details" className='bg-gradient-to-r from-[#34647e] to-[#7fa8be] text-white py-2 px-10  my-6 rounded-md'>Explore Now</Link>
+            </div>
            
           </div>
           <div class="product-card-b flex flex-col w-[350px]">
@@ -33,8 +37,8 @@ const Courses = () => {
             </div>
             
             <div className=" flex-1">
-            <h2 className=' font-semibold'>Objective Structured Clinical Examination (OSCE)</h2>
-            <button className='bg-gradient-to-r from-[#34647e] to-[#7fa8be] text-white py-2 px-10  my-6 rounded-md'>Register</button>
+            <h2 className=' font-semibold'>Coming soon</h2>
+            <Link className='bg-gradient-to-r from-[#34647e] to-[#7fa8be] text-white py-2 px-10  my-6 rounded-md'>Explore Now</Link>
             </div>     
           </div>
           
