@@ -34,10 +34,10 @@ const Home = () => {
             Achieve Your Dental License with Dental Strivers
           </h1>
           <p className="text-xl lg:text-2xl mt-4 text-white">
-            Dental Striver is dedicated to helping international dental professionals
-            develop the expertise required to excel in the NDEB examinations.
-            Our program provides comprehensive training and resources to ensure
-            success.
+            Dental Strivers is dedicated to helping international trained dental
+            professionals develop the knowledge and expertise required to excel
+            in the NDEB examinations. Our program provides comprehensive
+            training and resources to ensure success.
           </p>
           {/* <button className="bg-[#2ed0be] text-white px-8 py-3 rounded mt-6  transform hover:scale-105 transition duration-300">
             Enroll Now
@@ -49,7 +49,7 @@ const Home = () => {
       <Courses />
 
       {/* Features Section */}
-      <WhyChooseUs/>
+      <WhyChooseUs />
 
       {/*  */}
 
@@ -65,11 +65,11 @@ const Home = () => {
       </section>
       {/*  */}
 
-    <ContactUs />
+      <ContactUs />
 
       {/* Footer */}
       <Footer />
-      <Whatsapp/>
+      <Whatsapp />
     </div>
   );
 };

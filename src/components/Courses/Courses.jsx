@@ -28,7 +28,7 @@ const Courses = () => {
             </div>
            
           </div>
-          <div class="product-card-b flex flex-col w-[350px]">
+          {/* <div class="product-card-b flex flex-col w-[350px]">
             <div className=" flex-1">
             <img
               src="https://acecourses.ca/images/688.jpg"
@@ -40,7 +40,7 @@ const Courses = () => {
             <h2 className=' font-semibold'>Coming soon</h2>
             <Link className='bg-gradient-to-r from-[#34647e] to-[#7fa8be] text-white py-2 px-10  my-6 rounded-md'>Explore Now</Link>
             </div>     
-          </div>
+          </div> */}
           
         </div>
       </section>
