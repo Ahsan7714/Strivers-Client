@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import UserSidebar from '../../../components/UserSidebar/UserSidebar';
-import Navbar from '../../../components/Navbar/Navbar';
-import Footer from '../../../components/Footer/Footer';
-import './MyCourse.css';
-import { Link } from 'react-router-dom';
-import MobileNavbar from '../../../components/MobileNavbar/MobileNavbar';
-import UserNavbar from '../../../components/UserNavbar/UserNavbar';
-import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-hot-toast';
-import { getCourses } from '../../../store/reducers/userReducers';
+import React, { useEffect, useState } from "react";
+import UserSidebar from "../../../components/UserSidebar/UserSidebar";
+import Navbar from "../../../components/Navbar/Navbar";
+import Footer from "../../../components/Footer/Footer";
+import "./MyCourse.css";
+import { Link } from "react-router-dom";
+import MobileNavbar from "../../../components/MobileNavbar/MobileNavbar";
+import UserNavbar from "../../../components/UserNavbar/UserNavbar";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-hot-toast";
+import { getCourses } from "../../../store/reducers/userReducers";
 import Loader from "../../../components/Spinner/Loader";
 
 const MyCourse = () => {
@@ -31,19 +31,17 @@ const MyCourse = () => {
   };
 
   useEffect(() => {
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
     <>
       <UserNavbar />
-      <div className='flex lg:w-[80%] w-full lg:mx-auto my-5 border border-[#00000023] h-[80vh] rounded-md'>
-        {screenSize > 786 ? (
-          <UserSidebar />
-        ) : <MobileNavbar />}
-        <div className='main-content w-full p-7'>
-          <h1 className='text-center text-[30px] font-bold'>My Courses</h1>
+      <div className="flex lg:w-[80%] w-full lg:mx-auto my-5 border border-[#00000023] h-[80vh] rounded-md">
+        {screenSize > 786 ? <UserSidebar /> : <MobileNavbar />}
+        <div className="main-content w-full p-7">
+          <h1 className="text-center text-[30px] font-bold">My Courses</h1>
           {loading ? (
             <Loader />
           ) : allCourses.length > 0 ? (
@@ -52,25 +50,39 @@ const MyCourse = () => {
                 {allCourses.map((course, index) => (
                   <div key={index} className="product-card-c w-[300px]">
                     <img
-                      src={course.image || "https://via.placeholder.com/300"}
+                      src={
+                        course.courseDetails.image ||
+                        "https://via.placeholder.com/300"
+                      }
                       alt={course.title}
                     />
-                    <h2 className='font-semibold'>{course.title}</h2>
-                    <div className='my-6'>
-                      <Link to={`/user/my-course/content/${course.id}`} className='bg-gradient-to-r from-[#427590] to-[#427590bd] text-white py-2 px-10 rounded-md'>View</Link>
+                    <h2 className="font-semibold px-1 py-3 text-[20px]">
+                      {course.courseDetails.title}
+                    </h2>
+                    <div className=" flex gap-6  px-2">
+                      <h5>Package : </h5>
+                      <h5 className=" font-medium">{course.packageDetails.packageName}</h5>
+                    </div>
+                    <div className="my-6">
+                      <Link
+                        to={`/user/my-course/content/${course.id}`}
+                        className="bg-gradient-to-r from-[#427590] to-[#427590bd] text-white py-2 px-10 rounded-md"
+                      >
+                        View
+                      </Link>
                     </div>
                   </div>
                 ))}
               </div>
             </section>
           ) : (
-            <p className='text-start text-[20px] mt-10'>No courses found</p>
+            <p className="text-start text-[20px] mt-10">No courses found</p>
           )}
         </div>
       </div>
       <Footer />
     </>
   );
-}
+};
 
 export default MyCourse;

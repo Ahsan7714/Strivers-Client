@@ -10,6 +10,8 @@ const initialState = {
   isPackageCreated: false,
   tickets : [],
   isTicketUpdated: false,
+  activeCourses : [],
+  isUserRemoved : false,
 };
 
 // get all courses
@@ -83,6 +85,36 @@ export const updateTicketStatus = createAsyncThunk(
     }
   }
 );
+// get all aproved tickets 
+export const getApprovedTickets = createAsyncThunk(
+  "/api/active-users",
+  async (payload, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await axios.get(`${baseurl}/api/active-users`, {
+        withCredentials: true,
+      });
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+// Delete a course by admin for a user and delete the ticket of that course 
+export const removeUser = createAsyncThunk(
+  "admin/removeUser",
+  async (payload, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { userId, courseId, packageId } = payload;
+      const { data } = await axios.delete(`${baseurl}/api/active-users`, {
+        data: { userId, courseId, packageId },
+        withCredentials: true,
+      });
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 
 export const adminReducer = createSlice({
@@ -97,6 +129,8 @@ export const adminReducer = createSlice({
       state.isPackageCreated = false;
       state.tickets = [];
       state.isTicketUpdated = false
+      state.activeCourses = [];
+      state.activeCourses = [];
     },
   },
   extraReducers: (builder) => {
@@ -174,6 +208,32 @@ export const adminReducer = createSlice({
       state.loading = false;
       state.error = action.payload;
     });
+    // get all aproved tickets
+    builder.addCase(getApprovedTickets.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getApprovedTickets.fulfilled, (state, action) => {
+      state.loading = false;
+      state.activeCourses = action.payload;
+    });
+    builder.addCase(getApprovedTickets.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    }
+    );
+    // remove a user from a course
+    builder.addCase(removeUser.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(removeUser.fulfilled, (state, action) => {
+      state.loading = false;
+      state.isUserRemoved = true;
+    });
+    builder.addCase(removeUser.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    }
+    );
   },
 });
 

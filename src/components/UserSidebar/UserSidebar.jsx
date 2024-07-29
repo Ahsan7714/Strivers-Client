@@ -1,16 +1,26 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import './UserSidebar.css';
-// import { logout , clearState } from "../../store/reducers/userReducers";
-// import { useDispatch , useSelector } from "react-redux";
+import { useDispatch , useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 import { FaBook } from "react-icons/fa6";
+import { logout } from "../../store/reducers/userReducers";
 
 const AdminSidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { isLoggedOut , loading , error } = useSelector((state) => state.user);
+  useEffect(() => {
+    if (isLoggedOut) {
+      toast.success("Logged out successfully");
+      navigate("/");
+    }
+  }, [isLoggedOut, navigate]);
+
 
   const handleLogout = () => {
+    dispatch(logout());
     toast.success("Logged out successfully");
     navigate("/");
   };

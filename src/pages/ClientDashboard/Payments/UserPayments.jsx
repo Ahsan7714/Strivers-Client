@@ -50,14 +50,16 @@ function UserPayments() {
                 >
                   <div className="detail-cont-a flex-1 flex lg:flex-row flex-col justify-around items-center">
                     <div className="flex flex-col gap-5">
-                      <h1 className="text-xl font-bold">{ticket.courseId.title}</h1>
+                      <h1 className="text-xl font-bold">
+                        {ticket.courseId.title}
+                      </h1>
                       <div className="bg-white rounded-xl inline-block text-center w-[100px] font-semibold text-[#6bcaef] py-1 px-5">
                         <h1>Start {ticket.startDate}</h1>
                       </div>
                     </div>
                     <div className="text-3xl flex items-center">
-                      <h1 className="text-[#2c5872] font-bold">
-                        ${ticket.amount} + HST
+                      <h1 className="text-[#2c5872] font-bold flex">
+                        ${ticket.packageId.price} + HST
                       </h1>
                     </div>
                   </div>

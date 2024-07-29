@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect } from "react";
 import AdminSidebar from "../../../components/AdminSidebar/AdminSidebar";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -9,11 +9,18 @@ import TableRow from "@mui/material/TableRow";
 import { Paper, Select, MenuItem, Button } from "@mui/material";
 import AdminMobileNavbar from "../../../components/adminMobileNavbar/AdminMobileNavbar";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { useDispatch, useSelector } from "react-redux";
+import { getApprovedTickets,clearState ,removeUser } from "../../../store/reducers/adminReducers";
 
 function UserCourse() {
+  const dispatch = useDispatch();
+  const { activeCourses, loading, error ,isUserRemoved} = useSelector((state) => state.admin);
   const [filterCourse, setFilterCourse] = useState("");
   const [filterPackage, setFilterPackage] = useState("");
   const [screenSize, setScreenSize] = useState(window.innerWidth);
+  useEffect(() => {
+    dispatch(getApprovedTickets());
+  }, [dispatch]);
 
   const handleResize = () => {
     setScreenSize(window.innerWidth);
@@ -24,36 +31,7 @@ function UserCourse() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const users = [
-    {
-      id: 1,
-      name: "John Doe",
-      email: "johndoe@gmail.com",
-      package: "Standard",
-      course: "Python",
-    },
-    {
-      id: 2,
-      name: "Jane Doe",
-      email: "janedoe@gmail.com",
-      package: "Premium",
-      course: "Java",
-    },
-    {
-      id: 3,
-      name: "John Smith",
-      email: "johnsmith@gmail.com",
-      package: "Premium",
-      course: "Python",
-    },
-    {
-      id: 4,
-      name: "Smith Doe",
-      email: "smithdoe@gmail.com",
-      package: "Standard",
-      course: "Java",
-    },
-  ];
+  
 
   const handleFilterCourseChange = (event) => {
     setFilterCourse(event.target.value);
@@ -63,15 +41,15 @@ function UserCourse() {
     setFilterPackage(event.target.value);
   };
 
-  const handleDelete = (userId) => {
-    // Handle delete action here, e.g., remove the user from the list or make an API call
-    console.log(`Delete user with ID: ${userId}`);
+  const handleDelete = (userId, courseId, packageId) => {
+    console.log(userId, courseId, packageId);
+    dispatch(removeUser({ userId, courseId, packageId }));
   };
 
-  const filteredUsers = users.filter((user) => {
+  const filteredUsers = activeCourses.filter((user) => {
     return (
-      (filterCourse === "" || user.course === filterCourse) &&
-      (filterPackage === "" || user.package === filterPackage)
+      (filterCourse === "" || user.courseId.title === filterCourse) &&
+      (filterPackage === "" || user.packageId.packageName === filterPackage)
     );
   });
 
@@ -107,8 +85,8 @@ function UserCourse() {
               fullWidth
             >
               <MenuItem value="">All Packages</MenuItem>
-              <MenuItem value="Standard">Standard Package</MenuItem>
-              <MenuItem value="Premium">Premium Package</MenuItem>
+              <MenuItem value="mocks">Standard Package</MenuItem>
+              <MenuItem value="fullCourse">Premium Package</MenuItem>
             </Select>
           </div>
           <div>
@@ -120,9 +98,9 @@ function UserCourse() {
                       <TableCell align="center" className="text-white text-lg">
                         S.No
                       </TableCell>
-                      <TableCell align="center" className="text-white text-lg">
+                      {/* <TableCell align="center" className="text-white text-lg">
                         Name
-                      </TableCell>
+                      </TableCell> */}
                       <TableCell align="center" className="text-white text-lg">
                         Email
                       </TableCell>
@@ -144,14 +122,14 @@ function UserCourse() {
                         className={index % 2 === 0 ? "bg-gray-100" : "bg-white"}
                       >
                         <TableCell align="center">{index + 1}</TableCell>
-                        <TableCell align="center">{user.name}</TableCell>
+                        {/* <TableCell align="center">{user.name}</TableCell> */}
                         <TableCell align="center">{user.email}</TableCell>
-                        <TableCell align="center">{user.package}</TableCell>
-                        <TableCell align="center">{user.course}</TableCell>
+                        <TableCell align="center">{user.packageId.packageName}</TableCell>
+                        <TableCell align="center">{user.courseId.title}</TableCell>
                         <TableCell align="center">
                           <RiDeleteBinLine
                             className="bg-red-500 text-white  p-1 cursor-pointer ml-8 rounded-md text-3xl"
-                            onClick={() => handleDelete(user.id)}
+                            onClick={() => handleDelete(user.id , user.packageId.id , user.courseId.id)}
                           />
                         </TableCell>
                       </TableRow>

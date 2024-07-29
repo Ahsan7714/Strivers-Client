@@ -12,6 +12,8 @@ const initialState = {
   course : {},
   isRequestSubmitted: false,
   tickets : [],
+  user : null,
+  isLoggedOut: false,
 };
 
 // sign up
@@ -35,6 +37,20 @@ export const signIn = createAsyncThunk(
     async (payload, { rejectWithValue, fulfillWithValue }) => {
       try {
         const { data } = await axios.post(`${baseurl}/api/users/signin`, payload, {
+          withCredentials: true,
+        });
+        return fulfillWithValue(data);
+      } catch (error) {
+        return rejectWithValue(error.response.data);
+      }
+    }
+  );
+  // log out
+export const logout = createAsyncThunk(
+    "/api/users/signout",
+    async (payload, { rejectWithValue, fulfillWithValue }) => {
+      try {
+        const { data } = await axios.post(`${baseurl}/api/users/signout`, {
           withCredentials: true,
         });
         return fulfillWithValue(data);
@@ -116,6 +132,20 @@ export const getTickets = createAsyncThunk(
       }
     }
   );
+  // load user
+export const loadUser = createAsyncThunk(
+    "/api/users/loaduser",
+    async (payload, { rejectWithValue, fulfillWithValue }) => {
+      try {
+        const { data } = await axios.get(`${baseurl}/api/users/loaduser`, {
+          withCredentials: true,
+        });
+        return fulfillWithValue(data);
+      } catch (error) {
+        return rejectWithValue(error.response.data);
+      }
+    }
+  );
 
 export const userReducer = createSlice({
   name: "userReducer",
@@ -131,6 +161,8 @@ export const userReducer = createSlice({
       state.course = {};
       state.isRequestSubmitted = false;
       state.tickets = [];
+      state.user = null;
+      state.isLoggedOut = false;
     },
   },
   extraReducers: (builder) => {
@@ -216,6 +248,30 @@ export const userReducer = createSlice({
       state.tickets = action.payload;
     });
     builder.addCase(getTickets.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload?.message;
+    });
+    // load user
+    builder.addCase(loadUser.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(loadUser.fulfilled, (state, action) => {
+      state.loading = false;
+      state.user = action.payload;
+    });
+    builder.addCase(loadUser.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload?.message;
+    });
+    // log out
+    builder.addCase(logout.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(logout.fulfilled, (state, action) => {
+      state.loading = false;
+      state.isLoggedOut = true;
+    });
+    builder.addCase(logout.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload?.message;
     });

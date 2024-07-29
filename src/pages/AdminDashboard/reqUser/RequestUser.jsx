@@ -50,15 +50,15 @@ function RequestUser() {
     setModalIsOpen(false);
   };
   useEffect(() => {
-    if(isTicketUpdated){
-      toast.success("User approved successfully")
-      dispatch(getAllTickets())
-      dispatch(clearState())
+    if (isTicketUpdated) {
+      toast.success("User approved successfully");
+      dispatch(getAllTickets());
+      dispatch(clearState());
     }
-  }, [isTicketUpdated])
+  }, [isTicketUpdated]);
   const handleApprove = (id) => {
     dispatch(updateTicketStatus({ id, status: "approve" }));
-  }
+  };
 
   return (
     <div className="flex font-outfit">
@@ -73,7 +73,7 @@ function RequestUser() {
       )}
       <div className="lg:ml-[23%] w-[77%] pt-[3%]">
         <div className="lg:w-[77%] mx-auto p-5">
-          <h1 className="text-[30px] font-semibold py-3">Pending Users</h1>
+          <h1 className="text-[30px] font-semibold py-3">Course Requests</h1>
           <div>
             <Paper sx={{ width: "100%", overflow: "hidden" }}>
               <TableContainer sx={{ maxHeight: 440 }}>
@@ -84,10 +84,10 @@ function RequestUser() {
                         S.No
                       </TableCell>
                       <TableCell align="center" className="text-white text-lg">
-                        Name
+                        Email
                       </TableCell>
                       <TableCell align="center" className="text-white text-lg">
-                        Email
+                        Package
                       </TableCell>
                       <TableCell align="center" className="text-white text-lg">
                         View
@@ -104,8 +104,10 @@ function RequestUser() {
                           }
                         >
                           <TableCell align="center">{index + 1}</TableCell>
-                          <TableCell align="center">{user.name}</TableCell>
                           <TableCell align="center">{user.email}</TableCell>
+                          <TableCell align="center">
+                            {user.packageId.packageName}
+                          </TableCell>
                           <TableCell align="center">
                             <button
                               className="bg-green-600 text-white px-2 py-1 rounded-md"
@@ -146,10 +148,13 @@ function RequestUser() {
               <strong>Email:</strong> {selectedUser.email}
             </p>
             <p className="mt-4">
-              <strong>Course:</strong> {selectedUser.course}
+              <strong>Course:</strong> {selectedUser.courseId.title}
             </p>
             <p className="mt-4">
-              <strong>Package:</strong> {selectedUser.package}
+              <strong>Package:</strong> {selectedUser.packageId.packageName}
+            </p>
+            <p className="mt-4">
+              <strong>Mocks Purchased:</strong> {selectedUser.mocksPurcahsed}
             </p>
             {/* <p className="mt-4">
               <strong>Account Name:</strong> {selectedUser.accountName}

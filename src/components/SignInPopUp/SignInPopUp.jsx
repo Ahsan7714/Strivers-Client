@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './SignInPopUp.css';
 import { IoCloseCircleOutline } from 'react-icons/io5';
 import { useAuthPopUp } from '../../Context/AuthPopUpContext';
-import { signUp , signIn , clearState } from '../../store/reducers/userReducers';
+import { signUp , signIn , clearState ,loadUser } from '../../store/reducers/userReducers';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
@@ -11,12 +11,12 @@ import Loader from '../Spinner/Loader';
 const SignInPopUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isSignedUp, isSignedIn, error, loading } = useSelector(state => state.user);
+  const { isSignedUp, isSignedIn, error, loading, user } = useSelector(state => state.user);
   const { type, onClose, onOpen } = useAuthPopUp();
 
   // State for sign-in data
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState(''); // 
+  const [password, setPassword] = useState('');
 
   // State for sign-up data
   const [signUpData, setSignUpData] = useState({
@@ -38,23 +38,27 @@ const SignInPopUp = () => {
   useEffect(() => {
     if (isSignedIn) {
       toast.success('Logged In Successfully');
-      // dispatch(loadUser());
-      dispatch(clearState());
-      navigate('/user/my-course');
+      dispatch(loadUser()).then(() => {
+        dispatch(clearState());
+        if (user?.role === 'admin') {
+          navigate('/dashboard');
+        } else {
+          navigate('/user/my-course');
+        }
+      });
       onClose();
     }
     if (error) {
       alert("error");
-      // toast.error(error);
       dispatch(clearState());
     }
-  }, [isSignedIn, dispatch, navigate, onClose]);
+  }, [isSignedIn, dispatch, navigate, onClose, user?.role]);
 
   // Separate useEffect for handling user registration
   useEffect(() => {
     if (isSignedUp) {
       toast.success('Registered Successfully');
-      // dispatch(loadUser());
+      dispatch(loadUser());
       dispatch(clearState());
       onClose();
     }
@@ -68,7 +72,6 @@ const SignInPopUp = () => {
   const handleSignUpClick = (e) => {
     e.preventDefault();
     dispatch(signUp(signUpData));
-    
   };
 
   // Handler for opening the sign-in modal from the sign-up modal
@@ -140,13 +143,11 @@ const SignInPopUp = () => {
             </div>
             <h1>Create An Account</h1>
             <form onSubmit={handleSignUpClick} className=' form-login'>
-            <input className='loginSearch' required type="text" placeholder="Enter Your Name" name="name" onChange={onSignUpChange} />
-            <input className='loginSearch' required type="email" placeholder="Enter Your Email*" name="email" onChange={onSignUpChange} />
-            <input className='loginSearch' required type="text" placeholder="Create a Password" name="password" onChange={onSignUpChange} />
-            <button className='signUpBtn' type='submit'>Sign Up</button>
-           
+              <input className='loginSearch' required type="text" placeholder="Enter Your Name" name="name" onChange={onSignUpChange} />
+              <input className='loginSearch' required type="email" placeholder="Enter Your Email*" name="email" onChange={onSignUpChange} />
+              <input className='loginSearch' required type="text" placeholder="Create a Password" name="password" onChange={onSignUpChange} />
+              <button className='signUpBtn' type='submit'>Sign Up</button>
             </form>
-           
             <p>
               Have an account?{' '}
               <button type="button" onClick={handleOpenSignIn}>
