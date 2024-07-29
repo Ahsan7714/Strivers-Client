@@ -1,0 +1,227 @@
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+import baseurl from "../baseurl";
+
+const initialState = {
+  loading: false,
+  error: "",
+  isSignedUp: false,
+  isSignedIn: false,
+  allCourses : [],
+  courses : [],
+  course : {},
+  isRequestSubmitted: false,
+  tickets : [],
+};
+
+// sign up
+export const signUp = createAsyncThunk(
+    "user/signUp",
+    async (payload, { rejectWithValue, fulfillWithValue }) => {
+      try {
+        const { data } = await axios.post(`${baseurl}/api/users/signup`, payload, {
+          withCredentials: true,
+        });
+        return fulfillWithValue(data);
+      } catch (error) {
+        return rejectWithValue(error.response.data);
+      }
+    }
+  );
+
+//   sign in
+export const signIn = createAsyncThunk(
+    "user/signIn",
+    async (payload, { rejectWithValue, fulfillWithValue }) => {
+      try {
+        const { data } = await axios.post(`${baseurl}/api/users/signin`, payload, {
+          withCredentials: true,
+        });
+        return fulfillWithValue(data);
+      } catch (error) {
+        return rejectWithValue(error.response.data);
+      }
+    }
+  );
+
+  // get all courses
+export const getAllCourses = createAsyncThunk(
+    "user/getAllCourses",
+    async (payload, { rejectWithValue, fulfillWithValue }) => {
+      try {
+        const { data } = await axios.get(`${baseurl}/api/courses`, {
+          withCredentials: true,
+        });
+        console.log(data);
+        return fulfillWithValue(data);
+      } catch (error) {
+        return rejectWithValue(error.response.data);
+      }
+    }
+  );
+
+  // get all courses of a user 
+export const getCourses = createAsyncThunk(
+    "user/getCourses",
+    async (payload, { rejectWithValue, fulfillWithValue }) => {
+      try {
+        const { data } = await axios.get(`${baseurl}/api/courses/mine`, {
+          withCredentials: true,
+        });
+        return fulfillWithValue(data);
+      } catch (error) {
+        return rejectWithValue(error.response.data);
+      }
+    }
+  );
+  // get a course by its id
+export const getCourse = createAsyncThunk(
+    "user/getCourse",
+    async (payload, { rejectWithValue, fulfillWithValue }) => {
+      try {
+        const { data } = await axios.get(`${baseurl}/api/courses/${payload}`, {
+          withCredentials: true,
+        });
+        return fulfillWithValue(data);
+      } catch (error) {
+        return rejectWithValue(error.response.data);
+      }
+    }
+  );
+  // request to buy a course
+export const requestCourse = createAsyncThunk(
+    "user/requestCourse",
+    async (payload, { rejectWithValue, fulfillWithValue }) => {
+      try {
+        const { data } = await axios.post(`${baseurl}/api/tickets`, payload, {
+          withCredentials: true,
+        });
+        return fulfillWithValue(data);
+      } catch (error) {
+        return rejectWithValue(error.response.data);
+      }
+    }
+  );
+  // get all tickets of a user 
+export const getTickets = createAsyncThunk(
+    "/api/mytickets",
+    async (payload, { rejectWithValue, fulfillWithValue }) => {
+      try {
+        const { data } = await axios.get(`${baseurl}/api/mytickets`, {
+          withCredentials: true,
+        });
+        return fulfillWithValue(data);
+      } catch (error) {
+        return rejectWithValue(error.response.data);
+      }
+    }
+  );
+
+export const userReducer = createSlice({
+  name: "userReducer",
+  initialState: initialState,
+  reducers: {
+    clearState: (state) => {
+      state.error = "";
+      state.loading = false;
+      state.isSignedUp = false;
+      state.isSignedIn = false;
+      state.allCourses = [];
+      state.courses = [];
+      state.course = {};
+      state.isRequestSubmitted = false;
+      state.tickets = [];
+    },
+  },
+  extraReducers: (builder) => {
+    //sign up
+    builder.addCase(signUp.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(signUp.fulfilled, (state, action) => {
+      state.loading = false;
+      state.isSignedUp = true;
+    });
+    builder.addCase(signUp.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    });
+    // sign in
+    builder.addCase(signIn.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(signIn.fulfilled, (state, action) => {
+      state.loading = false;
+      state.isSignedIn = true;
+    });
+    builder.addCase(signIn.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload?.message;
+    });
+    // get all courses
+    builder.addCase(getAllCourses.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getAllCourses.fulfilled, (state, action) => {
+      state.loading = false;
+      state.courses = action.payload;
+    });
+    builder.addCase(getAllCourses.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload?.message;
+    });
+    // get courses
+    builder.addCase(getCourses.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getCourses.fulfilled, (state, action) => {
+      state.loading = false;
+      state.allCourses = action.payload;
+    });
+    builder.addCase(getCourses.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload?.message;
+    });
+    // get a course
+    builder.addCase(getCourse.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getCourse.fulfilled, (state, action) => {
+      state.loading = false;
+      state.course = action.payload;
+    });
+    builder.addCase(getCourse.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload
+    }
+    );
+    // request course
+    builder.addCase(requestCourse.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(requestCourse.fulfilled, (state, action) => {
+      state.loading = false;
+      state.isRequestSubmitted = true;
+    });
+    builder.addCase(requestCourse.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload?.message;
+    });
+    // get tickets
+    builder.addCase(getTickets.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getTickets.fulfilled, (state, action) => {
+      state.loading = false;
+      state.tickets = action.payload;
+    });
+    builder.addCase(getTickets.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload?.message;
+    });
+
+  },
+});
+
+export default userReducer.reducer;
+export const { clearState } = userReducer.actions;

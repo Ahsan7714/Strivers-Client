@@ -1,6 +1,5 @@
 import React from 'react';
 import './AuthPopUp.css';
-import { CustomSpinner } from '../Spinner/Spinner';
 import { IoCloseCircleOutline } from 'react-icons/io5';
 import { useAuthPopUp } from '../../Context/AuthPopUpContext';
 import SignInPopUp from '../SignInPopUp/SignInPopUp';

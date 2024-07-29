@@ -56,6 +56,16 @@ function AdminSidebar() {
           <p>New Course</p>
         </Link>
         <Link
+          to="/dashboard/add-package"
+          className={`
+            ${location.pathname === "/dashboard/add-package" ? "bg-gradient-to-r from-[#2b5870] to-[#6a97af] text-white" : "text-[#000000a5]"}
+            flex gap-2 items-center text-[20px] h-10 px-4 rounded-md
+          `}
+        >
+          <MdEventNote />
+          <p>Add Package</p>
+        </Link>
+        <Link
           to="/dashboard/post-content"
           className={`
             ${location.pathname === "/dashboard/post-content" ? "bg-gradient-to-r from-[#2b5870] to-[#6a97af] text-white" : "text-[#000000a5]"}

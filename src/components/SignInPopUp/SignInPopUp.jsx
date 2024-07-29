@@ -1,28 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import './SignInPopUp.css';
-import { CustomSpinner } from '../Spinner/Spinner';
 import { IoCloseCircleOutline } from 'react-icons/io5';
 import { useAuthPopUp } from '../../Context/AuthPopUpContext';
-// import { signUp, login, clearState, loadUser } from '../../../store/reducers/userReducers';
-// import { useDispatch, useSelector } from 'react-redux';
+import { signUp , signIn , clearState } from '../../store/reducers/userReducers';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import Loader from '../Spinner/Loader';
 
 const SignInPopUp = () => {
-//   const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-//   const { isUserRegistered, isUserLogged, user, error, loading } = useSelector(state => state.user);
+  const { isSignedUp, isSignedIn, error, loading } = useSelector(state => state.user);
   const { type, onClose, onOpen } = useAuthPopUp();
 
   // State for sign-in data
-  const [pin, setPin] = useState('');
-  const [phoneNo, setPhoneNo] = useState(''); // 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState(''); // 
 
   // State for sign-up data
   const [signUpData, setSignUpData] = useState({
     name: '',
-    phoneNo: '',
-    pin: '',
+    email: '',
+    password: '',
   });
 
   // Handler for sign-up input changes
@@ -35,34 +35,40 @@ const SignInPopUp = () => {
   };
 
   // Separate useEffect for handling user login
-//   useEffect(() => {
-//     if (isUserLogged) {
-//       toast.success('Logged In Successfully');
-//       dispatch(loadUser());
-//       dispatch(clearState());
-//       onClose();
-//     }
-//   }, [isUserLogged, dispatch, navigate, onClose]);
+  useEffect(() => {
+    if (isSignedIn) {
+      toast.success('Logged In Successfully');
+      // dispatch(loadUser());
+      dispatch(clearState());
+      navigate('/user/my-course');
+      onClose();
+    }
+    if (error) {
+      alert("error");
+      // toast.error(error);
+      dispatch(clearState());
+    }
+  }, [isSignedIn, dispatch, navigate, onClose]);
 
   // Separate useEffect for handling user registration
-//   useEffect(() => {
-//     if (isUserRegistered) {
-//       toast.success('Registered Successfully');
-//       dispatch(loadUser());
-//       dispatch(clearState());
-//       onClose();
-//     }
-//     if (error) {
-//       toast.error(error);
-//       dispatch(clearState());
-//     }
-//   }, [isUserRegistered, error, dispatch, onClose]);
+  useEffect(() => {
+    if (isSignedUp) {
+      toast.success('Registered Successfully');
+      // dispatch(loadUser());
+      dispatch(clearState());
+      onClose();
+    }
+    if (error) {
+      toast.error(error);
+      dispatch(clearState());
+    }
+  }, [isSignedUp, error, dispatch, onClose]);
 
   // Handler for sign-up button click
-  const handleSignUpClick = () => {
-   
-    console.log("Sign Up Data:", signUpData);
-    // dispatch(signUp(signUpData));
+  const handleSignUpClick = (e) => {
+    e.preventDefault();
+    dispatch(signUp(signUpData));
+    
   };
 
   // Handler for opening the sign-in modal from the sign-up modal
@@ -77,13 +83,14 @@ const SignInPopUp = () => {
   };
 
   // Handler for sign-in button click
-  const handleSignIn = () => {
-    // dispatch(login({ pin , phoneNo }));
+  const handleSignIn = (e) => {
+    e.preventDefault();
+    dispatch(signIn({ email, password }));
   };
 
-//   if (loading) {
-//     return <CustomSpinner />;
-//   }
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="backdrop_shadow">
@@ -98,22 +105,22 @@ const SignInPopUp = () => {
                 <label htmlFor="sigin_pin">Login</label>
                 <input
                   className='loginSearch'
-                  type="text"
+                  type="email"
                   placeholder="Enter Your Email"
-                  name="phoneNo"
+                  name="email"
                   id="sigin_pin"
-                  onChange={(e) => setPhoneNo(e.target.value)}
-                  value={phoneNo}
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={email}
                   required
                 />
                 <input
                   className='loginSearch'
                   type="text"
                   placeholder="Enter Your Password"
-                  name="pin"
+                  name="password"
                   id="sigin_pin"
-                  onChange={(e) => setPin(e.target.value)}
-                  value={pin}
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
                   required
                 />
                 <button className="signin_btn" type="submit">Sign In</button>
@@ -134,8 +141,8 @@ const SignInPopUp = () => {
             <h1>Create An Account</h1>
             <form onSubmit={handleSignUpClick} className=' form-login'>
             <input className='loginSearch' required type="text" placeholder="Enter Your Name" name="name" onChange={onSignUpChange} />
-            <input className='loginSearch' required type="text" placeholder="Enter Your Email*" name="phoneNo" onChange={onSignUpChange} />
-            <input className='loginSearch' required type="text" placeholder="Create a Password" name="pin" onChange={onSignUpChange} />
+            <input className='loginSearch' required type="email" placeholder="Enter Your Email*" name="email" onChange={onSignUpChange} />
+            <input className='loginSearch' required type="text" placeholder="Create a Password" name="password" onChange={onSignUpChange} />
             <button className='signUpBtn' type='submit'>Sign Up</button>
            
             </form>

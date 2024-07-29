@@ -5,9 +5,12 @@ import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast';
 import { AuthPopUpProvider } from './Context/AuthPopUpContext.jsx'
+import { Provider } from 'react-redux'
+import store from './store/index.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    <Provider store={store}>
     <BrowserRouter>
      <AuthPopUpProvider>
       <App />
@@ -20,5 +23,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     }} />
       </AuthPopUpProvider>
       </BrowserRouter>
+      </Provider>
   </React.StrictMode>,
 )

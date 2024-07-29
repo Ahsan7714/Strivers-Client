@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AdminSidebar from "../../../components/AdminSidebar/AdminSidebar.jsx";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -9,64 +9,36 @@ import TableRow from "@mui/material/TableRow";
 import { Paper } from "@mui/material";
 import { IoMdClose } from "react-icons/io";
 import AdminMobileNavbar from "../../../components/adminMobileNavbar/AdminMobileNavbar.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getAllTickets,
+  updateTicketStatus,
+  clearState,
+} from "../../../store/reducers/adminReducers.js";
+import Loader from "../../../components/Spinner/Loader.jsx";
+import toast from "react-hot-toast";
 
 function RequestUser() {
+  const dispatch = useDispatch();
+  const { tickets, loading, error, isTicketUpdated } = useSelector(
+    (state) => state.admin
+  );
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [screenSize, setScreenSize] = useState(window.innerWidth);
 
+  useEffect(() => {
+    dispatch(getAllTickets());
+  }, [dispatch]);
 
   const handleResize = () => {
     setScreenSize(window.innerWidth);
   };
 
   React.useEffect(() => {
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  const users = [
-    {
-      id: 1,
-      name: "John Doe",
-      email: "johndoe@gmail.com",
-      package: "Standard",
-      course: "Python",
-      accNo: "1234567890",
-      bank: "Indus Bank",
-      accountName: "John ",
-    },
-    {
-      id: 2,
-      name: "Jane Doe",
-      email: "janedoe@gmail.com",
-      package: "Premium",
-      course: "Java",
-      accNo: "1234567890",
-      bank: "Bank of Montreal",
-      accountName: "Jane",
-    },
-    {
-      id: 3,
-      name: "John Smith",
-      email: "johnsmith@gmail.com",
-      package: "Premium",
-      course: "Python",
-      accNo: "1234567890",
-      bank: "Canadian Western Bank",
-      accountName: "John",
-    },
-    {
-      id: 4,
-      name: "Smith Doe",
-      email: "smithdoe@gmail.com",
-      package: "Standard",
-      course: "Java",
-      accNo: "1234567890",
-      bank: "HSBC",
-      accountName: "Smith",
-    },
-  ];
 
   const openModal = (user) => {
     setSelectedUser(user);
@@ -77,9 +49,19 @@ function RequestUser() {
     setSelectedUser(null);
     setModalIsOpen(false);
   };
+  useEffect(() => {
+    if(isTicketUpdated){
+      toast.success("User approved successfully")
+      dispatch(getAllTickets())
+      dispatch(clearState())
+    }
+  }, [isTicketUpdated])
+  const handleApprove = (id) => {
+    dispatch(updateTicketStatus({ id, status: "approve" }));
+  }
 
   return (
-    <div className="flex font-outfit" >
+    <div className="flex font-outfit">
       {screenSize > 768 ? (
         <>
           <AdminSidebar />
@@ -113,24 +95,35 @@ function RequestUser() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {users.map((user, index) => (
-                      <TableRow
-                        key={user.id}
-                        className={index % 2 === 0 ? "bg-gray-100" : "bg-white"}
-                      >
-                        <TableCell align="center">{index + 1}</TableCell>
-                        <TableCell align="center">{user.name}</TableCell>
-                        <TableCell align="center">{user.email}</TableCell>
-                        <TableCell align="center">
-                          <button
-                            className="bg-green-600 text-white px-2 py-1 rounded-md"
-                            onClick={() => openModal(user)}
-                          >
-                            View
-                          </button>
-                        </TableCell>
+                    {tickets && tickets.length > 0 ? (
+                      tickets.map((user, index) => (
+                        <TableRow
+                          key={user.id}
+                          className={
+                            index % 2 === 0 ? "bg-gray-100" : "bg-white"
+                          }
+                        >
+                          <TableCell align="center">{index + 1}</TableCell>
+                          <TableCell align="center">{user.name}</TableCell>
+                          <TableCell align="center">{user.email}</TableCell>
+                          <TableCell align="center">
+                            <button
+                              className="bg-green-600 text-white px-2 py-1 rounded-md"
+                              onClick={() => openModal(user)}
+                            >
+                              View
+                            </button>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    ) : (
+                      <TableRow>
+                        {" "}
+                        <TableCell colSpan={4} align="center">
+                          No pending users
+                        </TableCell>{" "}
                       </TableRow>
-                    ))}
+                    )}
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -158,14 +151,17 @@ function RequestUser() {
             <p className="mt-4">
               <strong>Package:</strong> {selectedUser.package}
             </p>
-            <p className="mt-4">
+            {/* <p className="mt-4">
               <strong>Account Name:</strong> {selectedUser.accountName}
-            </p>
-            <p className="mt-4">
+            </p> */}
+            {/* <p className="mt-4">
               <strong>Account Number:</strong> {selectedUser.accNo}
-            </p>
+            </p> */}
             <p className="mt-4">
-              <strong>Bank:</strong> {selectedUser.bank}
+              <strong>Price Paid:</strong> ${selectedUser.pricePaid}
+            </p>
+            <p className="mt-4 capitalize">
+              <strong>Paid Through:</strong> {selectedUser.paidThrough}
             </p>
             <div className="flex justify-end gap-4 mt-4">
               <button
@@ -180,7 +176,7 @@ function RequestUser() {
               <button
                 className="bg-gradient-to-r from-[#2b5870] to-[#6a97af] text-white px-3 py-2 rounded-md"
                 onClick={() => {
-                  // handleApprove(selectedUser.id);
+                  handleApprove(selectedUser.id);
                   closeModal();
                 }}
               >

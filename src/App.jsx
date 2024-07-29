@@ -16,6 +16,7 @@ import PostContent from './pages/AdminDashboard/postContent/PostContent'
 import CourseDetails from './pages/CourseDetails/CourseDetails'
 import UserPayments from './pages/ClientDashboard/Payments/UserPayments'
 import UserProfile from './pages/ClientDashboard/UserProfile/UserProfile'
+import NewPackage from './pages/AdminDashboard/newPackage/NewPackage'
 
 function App() {
 
@@ -25,7 +26,7 @@ function App() {
         <Route path='/' element={<Home/>}/>
         <Route path='/privacy-policy' element={<PrivacyPolicy/>}/>
         <Route path='/about-us' element={<AboutUs/>}/>
-        <Route path='/course-details' element={<CourseDetails/>}/>
+        <Route path='/course/:id' element={<CourseDetails/>}/>
         {/* <Route path='/user/packages' element={<UserPackages/>}/> */}
         <Route path='/user/my-course' element={<MyCourse/>}/>
         <Route path='/user/my-course/content' element={<MyCourseContent/>}/>
@@ -36,7 +37,8 @@ function App() {
         <Route path='/dashboard/req-users' element={<RequestUser/>}/>
         <Route path='/dashboard/courses' element={<UserCourse/>}/>
         <Route path='/dashboard/add-courses' element={<NewCourse/>}/>
-        <Route path='/dashboard/post-content' element={<PostContent/>}/> 
+        <Route path='/dashboard/post-content' element={<PostContent/>}/>
+        <Route path='/dashboard/add-package' element={<NewPackage/>}/> 
       </Routes>
 
     

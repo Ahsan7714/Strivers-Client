@@ -1,45 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import UserSidebar from "../../../components/UserSidebar/UserSidebar";
 import Navbar from "../../../components/Navbar/Navbar";
 import Footer from "../../../components/Footer/Footer";
 import { Link } from "react-router-dom";
 import { FaLongArrowAltRight } from "react-icons/fa";
-// import "./UserPackages.css"; // If you need additional styles
 import MobileNavbar from "../../../components/MobileNavbar/MobileNavbar";
 import UserNavbar from "../../../components/UserNavbar/UserNavbar";
 import PurchaseModel from "./PurchaseModel";
-
-const AllPackages = [
-  {
-    title: "Objective Structured Clinical Examination (OSCE)",
-    link: "/user/my-course/content",
-    linkText: "Subscribe",
-    image: "https://acecourses.ca/images/1043.jpg",
-    intfees: "2000",
-    locfees: "1500",
-    intbasic: "300",
-    locbasic: "200",
-    intinter: "500",
-    locinter: "400",
-    intadvance: "800",
-    locadvance: "600",
-  },
-];
+import { getAllCourses, clearState } from "../../../store/reducers/userReducers";
+import { useDispatch, useSelector } from "react-redux";
+import Loader from "../../../components/Spinner/Loader";
 
 const UserCourses = () => {
+  const dispatch = useDispatch();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [screenSize, setScreenSize] = React.useState(window.innerWidth);
+  const [screenSize, setScreenSize] = useState(window.innerWidth);
+  const { loading, error, courses } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch(getAllCourses());
+  }, [dispatch]);
 
   const handleResize = () => {
     setScreenSize(window.innerWidth);
   };
+
   const closeModal = () => {
     setModalIsOpen(false);
     setSelectedEvent(null);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -52,33 +44,39 @@ const UserCourses = () => {
         <div className="flex flex-col w-full h-[80vh] overflow-y-auto content-scrollbar content-center">
           <div className="main-content w-full lg:px-7">
             <h1 className="text-center text-[30px] font-bold py-5">Our Courses</h1>
-            <section className="py-6">
-              <div className="grid lg:grid-cols-2 grid-cols-1 gap-6 lg:gap-0 items-start justify-start w-full">
-                {AllPackages.map((pkg, index) => (
-                  <div
-                    key={index}
-                    className={`lg:w-[370px] w-[90%] mx-auto shadow-lg text-center flex flex-col justify-center items-center rounded-md ${
-                      AllPackages.length === 1 ? "lg:col-span-2" : "" // Center card if there's only one
-                    }`}
-                  >
-                    <img src={pkg.image} className="rounded-t-md" alt="Product" />
-                    <h2 className="font-semibold text-[20px] py-4">{pkg.title}</h2>
-                    <div className="mt-3 mb-6">
-                      <Link
-                        to='/course-details'
-                        // onClick={() => {
-                        //   setModalIsOpen(true);
-                        //   setSelectedEvent(pkg);
-                        // }}
-                        className="bg-[#a0b36d] text-white py-2 px-10 rounded-md"
-                      >
-                        See Details
-                      </Link>
+            {loading ? (
+              <Loader />
+            ) : courses.length > 0 ? (
+              <section className="py-6">
+                <div className="grid lg:grid-cols-2 grid-cols-1 gap-6 lg:gap-0 items-start justify-start w-full">
+                  {courses.map((course, index) => (
+                    <div
+                      key={index}
+                      className={`lg:w-[370px] w-[90%] mx-auto shadow-lg text-center flex flex-col justify-center items-center rounded-md ${
+                        courses.length === 1 ? "lg:col-span-2" : "" // Center card if there's only one
+                      }`}
+                    >
+                      <img src={course.image || "https://via.placeholder.com/300"} className="rounded-t-md" alt="Course" />
+                      <h2 className="font-semibold text-[20px] py-4">{course.title}</h2>
+                      <div className="mt-3 mb-6">
+                        <Link
+                          to={`/course/${course.id}`}
+                          // onClick={() => {
+                          //   setModalIsOpen(true);
+                          //   setSelectedEvent(course);
+                          // }}
+                          className="bg-[#a0b36d] text-white py-2 px-10 rounded-md"
+                        >
+                          See Packages
+                        </Link>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            </section>
+                  ))}
+                </div>
+              </section>
+            ) : (
+              <p className='text-center text-[20px]'>No courses found</p>
+            )}
           </div>
         </div>
       </div>
