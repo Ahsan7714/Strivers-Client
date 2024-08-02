@@ -3,17 +3,18 @@ import UserSidebar from "../../../components/UserSidebar/UserSidebar";
 import Navbar from "../../../components/Navbar/Navbar";
 import Footer from "../../../components/Footer/Footer";
 import "./MyCourse.css";
-import { Link } from "react-router-dom";
+import { Link , useNavigate } from "react-router-dom";
 import MobileNavbar from "../../../components/MobileNavbar/MobileNavbar";
 import UserNavbar from "../../../components/UserNavbar/UserNavbar";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
-import { getCourses } from "../../../store/reducers/userReducers";
+import { getCourses, getContent } from "../../../store/reducers/userReducers";
 import Loader from "../../../components/Spinner/Loader";
 
 const MyCourse = () => {
   const dispatch = useDispatch();
-  const { allCourses, loading, error } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const { allCourses, loading, error, content } = useSelector((state) => state.user);
   const [screenSize, setScreenSize] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -26,6 +27,7 @@ const MyCourse = () => {
     }
   }, [error]);
 
+
   const handleResize = () => {
     setScreenSize(window.innerWidth);
   };
@@ -34,6 +36,13 @@ const MyCourse = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const fetchContent = (courseId, packageId) => {
+    console.log(courseId, packageId);
+    dispatch(getContent( {courseId, packageId} ));
+    navigate(`/user/my-course/${courseId}/${packageId}`);
+    
+  };
 
   return (
     <>
@@ -59,17 +68,17 @@ const MyCourse = () => {
                     <h2 className="font-semibold px-1 py-3 text-[20px]">
                       {course.courseDetails.title}
                     </h2>
-                    <div className=" flex gap-6  px-2">
+                    <div className="flex gap-6 px-2">
                       <h5>Package : </h5>
-                      <h5 className=" font-medium">{course.packageDetails.packageName}</h5>
+                      <h5 className="font-medium">{course.packageDetails.packageName}</h5>
                     </div>
                     <div className="my-6">
-                      <Link
-                        to={`/user/my-course/content/${course.id}`}
+                      <button
                         className="bg-gradient-to-r from-[#427590] to-[#427590bd] text-white py-2 px-10 rounded-md"
+                        onClick={() => fetchContent(course.courseDetails.id, course.packageDetails.id)}
                       >
                         View
-                      </Link>
+                      </button>
                     </div>
                   </div>
                 ))}

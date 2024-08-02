@@ -9,18 +9,19 @@ import TableRow from "@mui/material/TableRow";
 import { Paper } from "@mui/material";
 import { IoMdClose } from "react-icons/io";
 import AdminMobileNavbar from "../../../components/adminMobileNavbar/AdminMobileNavbar.jsx";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector  } from "react-redux";
 import {
   getAllTickets,
   updateTicketStatus,
   clearState,
+  deleteRequest
 } from "../../../store/reducers/adminReducers.js";
 import Loader from "../../../components/Spinner/Loader.jsx";
 import toast from "react-hot-toast";
 
 function RequestUser() {
   const dispatch = useDispatch();
-  const { tickets, loading, error, isTicketUpdated } = useSelector(
+  const { tickets, loading, error, isTicketUpdated,isRequestDeleted } = useSelector(
     (state) => state.admin
   );
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -59,6 +60,23 @@ function RequestUser() {
   const handleApprove = (id) => {
     dispatch(updateTicketStatus({ id, status: "approve" }));
   };
+  useEffect(() => {
+    if (isRequestDeleted) {
+      toast.success("Request deleted successfully");
+      dispatch(getAllTickets());
+      dispatch(clearState());
+    } else if (error) {
+      toast.error(error);
+      dispatch(clearState());
+    }
+  }, [isRequestDeleted, error]);
+
+  const handleDeletePending = (id) => {
+    dispatch(deleteRequest(id));
+  }
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="flex font-outfit">
@@ -122,7 +140,7 @@ function RequestUser() {
                       <TableRow>
                         {" "}
                         <TableCell colSpan={4} align="center">
-                          No pending users
+                          No pending Request
                         </TableCell>{" "}
                       </TableRow>
                     )}
@@ -172,7 +190,7 @@ function RequestUser() {
               <button
                 className="bg-red-600 text-white px-3 py-2 rounded-md"
                 onClick={() => {
-                  // handleDeletePending(selectedUser.id);
+                  handleDeletePending(selectedUser.id);
                   closeModal();
                 }}
               >

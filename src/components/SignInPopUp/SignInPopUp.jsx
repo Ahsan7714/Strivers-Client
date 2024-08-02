@@ -35,24 +35,7 @@ const SignInPopUp = () => {
   };
 
   // Separate useEffect for handling user login
-  useEffect(() => {
-    if (isSignedIn) {
-      toast.success('Logged In Successfully');
-      dispatch(loadUser()).then(() => {
-        dispatch(clearState());
-        if (user?.role === 'admin') {
-          navigate('/dashboard');
-        } else {
-          navigate('/user/my-course');
-        }
-      });
-      onClose();
-    }
-    if (error) {
-      alert("error");
-      dispatch(clearState());
-    }
-  }, [isSignedIn, dispatch, navigate, onClose, user?.role]);
+ 
 
   // Separate useEffect for handling user registration
   useEffect(() => {
@@ -63,6 +46,7 @@ const SignInPopUp = () => {
       onClose();
     }
     if (error) {
+      console.log(error);
       toast.error(error);
       dispatch(clearState());
     }
@@ -84,6 +68,26 @@ const SignInPopUp = () => {
     onClose();
     onOpen('signUp');
   };
+
+  useEffect(() => {
+    if (isSignedIn) {
+      toast.success('Logged In Successfully');
+      dispatch(loadUser()).then(() => {
+        dispatch(clearState());
+        if (user?.role === 'admin') {
+          navigate('/dashboard');
+        } else {
+          navigate('/user/my-course');
+        }
+      });
+      onClose();
+    }
+    if (error) {
+      // console.log(error);
+      toast.error(error);
+      dispatch(clearState());
+    }
+  }, [isSignedIn, dispatch, navigate, onClose, user?.role]);
 
   // Handler for sign-in button click
   const handleSignIn = (e) => {

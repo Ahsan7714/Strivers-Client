@@ -2,31 +2,36 @@ import React, { useState, useEffect } from 'react';
 import UserSidebar from '../../../components/UserSidebar/UserSidebar';
 import Navbar from '../../../components/Navbar/Navbar';
 import Footer from '../../../components/Footer/Footer';
-import WaterMark from './WaterMark'; // Import the WaterMarkExample component
+import WaterMark from './WaterMark'; // Import the WaterMark component
 import './MyCourseContent.css';
-import pdf from '../../../assets/ex.pdf';
 import MobileNavbar from '../../../components/MobileNavbar/MobileNavbar';
 import UserNavbar from '../../../components/UserNavbar/UserNavbar';
-
-// Disable text selection and context menu (right-click)
-const disableCopyPaste = {
-  '*': {
-    userSelect: 'none',
-    MozUserSelect: 'none',
-    WebkitUserSelect: 'none',
-    msUserSelect: 'none',
-  },
-  canvas: {
-    pointerEvents: 'none',
-  },
-};
+import { getContent } from '../../../store/reducers/userReducers';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 const MyCourseContent = () => {
+  const dispatch = useDispatch();
+  const { courseId, packageId } = useParams();
+  const { content } = useSelector((state) => state.user);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [screenSize, setScreenSize] = useState(window.innerWidth);
+  const [selectedPdf, setSelectedPdf] = useState(null);
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const openModal = (pdfLink) => {
+    setSelectedPdf(pdfLink);
+    console.log(pdfLink);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedPdf(null);
+  };
+
+  useEffect(() => {
+    dispatch(getContent({ courseId, packageId }));
+  }, [dispatch, courseId, packageId]);
 
   const handleResize = () => {
     setScreenSize(window.innerWidth);
@@ -45,79 +50,72 @@ const MyCourseContent = () => {
         <div className="main-content w-full p-7 h-full overflow-y-auto content-scrollbar">
           <h1 className="text-center text-[30px] font-bold">My Courses</h1>
           <div className="flex flex-col">
-            <h1 className="py-2 px-3 text-[25px] font-semibold text-[#427590] border-b-2 border-[#427590]">
-              Week 1
-            </h1>
-            <div className="flex flex-col justify-start lg:ml-24">
-              <div className="p-5 my-4 flex flex-col gap-2 w-fit rounded-xl bg-gray-100">
-                <h1 className="text-[24px] font-medium text-center">Lecture No.1</h1>
-                <div className="flex flex-col">
-                  <p className="font-medium text-[20px]">Topic :</p>
-                  <p className="text-[18px]">Introduction of the Course</p>
+            {content && content.length > 0 ? (
+              content.map((item) => (
+                <div key={item.id} className="flex flex-col">
+                  <h1 className="py-2 px-3 text-[25px] font-semibold text-[#427590] border-b-2 border-[#427590]">
+                    Week {item.weekNo}
+                  </h1>
+                  <div className="flex flex-col justify-start lg:ml-24">
+                    <div className="p-5 my-4 flex flex-col gap-2 w-fit rounded-xl bg-gray-100">
+                      <h1 className="text-[24px] font-medium text-center">Lecture No.{item.lectureNo}</h1>
+                      <div className="flex flex-col">
+                        <p className="font-medium text-[20px]">Topic :</p>
+                        <p className="text-[18px]">{item.topic}</p>
+                      </div>
+                      {item.meetLink && (
+                        <a
+                          href={item.meetLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-500"
+                        >
+                          Click to join class
+                        </a>
+                      )}
+                      {item.pdfLink && (
+                        <>
+                        <button
+                          onClick={() => openModal(item.pdfLink)}
+                          className="bg-blue-500 text-white py-2 px-4 rounded"
+                          >
+                          View PDF
+                        </button>
+                          </>
+                      )}
+                      {item.mockLink && (
+                        <a
+                          href={item.mockLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-500"
+                        >
+                          Click to view recording
+                        </a>
+                      )}
+                    </div>
+                  </div>
                 </div>
-                <a
-                  href="http://meet.google.com/hoj-dggp-czy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-500"
-                >
-                  Click to join class
-                </a>
-              </div>
-              <div className="p-5 my-4 flex flex-col gap-2 w-fit rounded-xl bg-gray-100">
-                <h1 className="text-[24px] font-medium text-center"></h1>
-                <div className="flex flex-col">
-                  <p className="font-medium text-[20px]">Lecture 1 notes :</p>
-                  <p className="text-[18px]"></p>
-                </div>
-                <button
-                  onClick={openModal}
-                  className="bg-blue-500 text-white py-2 px-4 rounded"
-                >
-                  View PDF
-                </button>
-              </div>
-              <div className="p-5 my-4 flex flex-col gap-2 w-fit rounded-xl bg-gray-100">
-                <h1 className="text-[24px] font-medium text-center">
-                  Lecture No.1 Recording
-                </h1>
-                <div className="flex flex-col">
-                  <p className="font-medium text-[20px]">Topic :</p>
-                  <p className="text-[18px]">Introduction of the Course</p>
-                </div>
-                <a
-                  href="http://meet.google.com/hoj-dggp-czy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-500"
-                >
-                  Click to view recording
-                </a>
-              </div>
-              <div>
-                <iframe
-                  src="https://zoom.us/clips/embed/DrUCalh8JC1PjeRxFqFB3zZ2BJBTiWKG_S55ebCjT4DZvIqvSNnjBpfgH9I8IBskdQrQRw.xPwx_5h0hsyg7MBk"
-                  width="560"
-                  height="315"
-                  title="Lecture Recording"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-              </div>
-            </div>
+              ))
+            ) : (
+              <p>No content available.</p>
+            )}
+           <iframe src="https://drive.google.com/file/d/13cIoz3x88w23yR7od6liz6xGpChTQGRx/preview" width="640" height="480" allow="autoplay"></iframe>
+            {/* <video src="https://drive.google.com/file/d/1d0HP4Z-evNDbAklxFk4_HjXE9x0oN7Ml/view?usp=drivesdk">gh</video> */}
+
           </div>
         </div>
       </div>
       <Footer />
 
       {/* Modal */}
-      {isModalOpen && (
+      {isModalOpen && selectedPdf && (
         <div className="modal">
           <div className="modal-content h-[98vh]">
             <span className="close-button" onClick={closeModal}>
               &times;
             </span>
-            <WaterMark fileUrl={pdf}  />
+            <WaterMark fileUrl={selectedPdf} />
           </div>
         </div>
       )}

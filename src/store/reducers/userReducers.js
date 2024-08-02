@@ -14,6 +14,9 @@ const initialState = {
   tickets : [],
   user : null,
   isLoggedOut: false,
+  isPasswordUpdated : false,
+  content : {},
+  isContactUsSubmitted: false,
 };
 
 // sign up
@@ -26,7 +29,7 @@ export const signUp = createAsyncThunk(
         });
         return fulfillWithValue(data);
       } catch (error) {
-        return rejectWithValue(error.response.data);
+        return rejectWithValue(error.response.data.errors[0].message);
       }
     }
   );
@@ -41,7 +44,7 @@ export const signIn = createAsyncThunk(
         });
         return fulfillWithValue(data);
       } catch (error) {
-        return rejectWithValue(error.response.data);
+        return rejectWithValue(error.response.data.errors[0].message);
       }
     }
   );
@@ -146,6 +149,49 @@ export const loadUser = createAsyncThunk(
       }
     }
   );
+  // update password
+export const updatePassword = createAsyncThunk(
+    "/api/users/change-password",
+    async (payload, { rejectWithValue, fulfillWithValue }) => {
+      try {
+        const { data } = await axios.post(`${baseurl}/api/users/change-password`, payload, {
+          withCredentials: true,
+        });
+        return fulfillWithValue(data);
+      } catch (error) {
+        return rejectWithValue(error.response.data);
+      }
+    }
+  );
+  // get all content of a course according to pachage id and coures id
+export const getContent = createAsyncThunk(
+    "/api/content",
+    async ({courseId,packageId}, { rejectWithValue, fulfillWithValue }) => {
+      try {
+        const { data } = await axios.get(`${baseurl}/api/content/${courseId}/${packageId}`, {
+
+          withCredentials: true,
+        });
+        return fulfillWithValue(data);
+      } catch (error) {
+        return rejectWithValue(error.response.data);
+      }
+    }
+  );
+  // submit contact us form
+export const contactUs = createAsyncThunk(
+    "/api/contact-us",
+    async (payload, { rejectWithValue, fulfillWithValue }) => {
+      try {
+        const { data } = await axios.post(`${baseurl}/api/contactus`, payload, {
+          withCredentials: true,
+        });
+        return fulfillWithValue(data);
+      } catch (error) {
+        return rejectWithValue(error.response.data);
+      }
+    }
+  );
 
 export const userReducer = createSlice({
   name: "userReducer",
@@ -163,6 +209,9 @@ export const userReducer = createSlice({
       state.tickets = [];
       state.user = null;
       state.isLoggedOut = false;
+      state.isPasswordUpdated = false;
+      state.content = {};
+      state.isContactUsSubmitted = false;
     },
   },
   extraReducers: (builder) => {
@@ -176,7 +225,7 @@ export const userReducer = createSlice({
     });
     builder.addCase(signUp.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload.message;
+      state.error = action.payload;
     });
     // sign in
     builder.addCase(signIn.pending, (state) => {
@@ -188,7 +237,7 @@ export const userReducer = createSlice({
     });
     builder.addCase(signIn.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload?.message;
+      state.error = action.payload;
     });
     // get all courses
     builder.addCase(getAllCourses.pending, (state) => {
@@ -237,7 +286,7 @@ export const userReducer = createSlice({
     });
     builder.addCase(requestCourse.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload?.message;
+      state.error = action.payload;
     });
     // get tickets
     builder.addCase(getTickets.pending, (state) => {
@@ -272,6 +321,42 @@ export const userReducer = createSlice({
       state.isLoggedOut = true;
     });
     builder.addCase(logout.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload?.message;
+    });
+    // update password
+    builder.addCase(updatePassword.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updatePassword.fulfilled, (state, action) => {
+      state.loading = false;
+      state.isPasswordUpdated = true;
+    });
+    builder.addCase(updatePassword.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload?.message;
+    });
+    // get content
+    builder.addCase(getContent.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getContent.fulfilled, (state, action) => {
+      state.loading = false;
+      state.content = action.payload;
+    });
+    builder.addCase(getContent.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload?.message;
+    });
+    // submit contact us
+    builder.addCase(contactUs.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(contactUs.fulfilled, (state, action) => {
+      state.loading = false;
+      state.isContactUsSubmitted = true;
+    });
+    builder.addCase(contactUs.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload?.message;
     });

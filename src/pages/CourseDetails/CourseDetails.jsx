@@ -15,16 +15,26 @@ const CourseDetails = () => {
   const { loading, error, course } = useSelector((state) => state.user);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
+  const [mockCount, setMockCount] = useState(0);
+  const [mockPrice, setMockPrice] = useState("Price not available");
+
   useEffect(() => {
     dispatch(getCourse(id));
-  }, [dispatch]);
+  }, [dispatch, id]);
 
-  const [mockCount, setMockCount] = useState(0);
-  const prices = { 1: 100, 2: 200, 3: 300 };
-
-  const getPrice = (count) => {
-    return prices[count] || "100-300";
+  const getPrice = (count, mocksPrices) => {
+    const mock = mocksPrices.find((mock) => mock.quantity === count);
+    return mock ? mock.price : "Price not available";
   };
+
+  const handleMockChange = (event, mocksPrices) => {
+    const count = parseInt(event.target.value);
+    setMockCount(count);
+    const price = getPrice(count, mocksPrices);
+    setMockPrice(price);
+    console.log(count, price);
+  };
+
   const openModal = (event) => {
     setSelectedCourse(event);
     setModalIsOpen(true);
@@ -105,7 +115,7 @@ const CourseDetails = () => {
                     </div>
                   </div>
                 </div>
-              ) : pack.packageId.packageType === "mocks" ? (
+              ) : pack.packageId.packageType === "mock" ? (
                 <div key={pack._id} className="detail-cont flex lg:flex-row flex-col w-full bg-gray-200 py-14 px-14 rounded-md">
                   <div className="detail-cont-a flex-1 flex lg:flex-row flex-col justify-around items-center">
                     <div className="flex flex-col gap-5">
@@ -115,8 +125,10 @@ const CourseDetails = () => {
                       </div>
                     </div>
                     <div className="text-[35px] flex">
-                    <h1 className="text-[#2c5872] font-bold">
-                        ${mockCount === 0 ? `${pack.packageId.mocksPrices[0].price}-${pack.packageId.mocksPrices[2].price}` : getPrice(mockCount, pack.packageId.mocksPrices)} + HST
+                      <h1 className="text-[#2c5872] font-bold">
+                        ${mockCount === 0 
+                          ? `${pack.packageId.mocksPrices[0]?.price || 'N/A'}-${pack.packageId.mocksPrices[2]?.price || 'N/A'}` 
+                          : mockPrice} + HST
                       </h1>
                     </div>
                   </div>
@@ -130,7 +142,7 @@ const CourseDetails = () => {
                         <select
                           className="cursor-pointer bg-white px-5 border border-[#2c5872] text-[20px] h-[40px] rounded-lg"
                           value={mockCount}
-                          onChange={(e) => setMockCount(parseInt(e.target.value))}
+                          onChange={(e) => handleMockChange(e, pack.packageId.mocksPrices)}
                         >
                           <option value={0}>Select Mocks</option>
                           <option value={1}>1 Mock</option>
@@ -157,6 +169,7 @@ const CourseDetails = () => {
             onClose={closeModal}
             event={selectedCourse}
             course={course}
+            selectedMocks={{ mockCount, mockPrice }}
           />
       </section>
       <Footer />

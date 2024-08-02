@@ -45,7 +45,7 @@ const Navbar = () => {
           {user ? (
             user.role === 'admin' ? (
               <Link
-                to="/dashboard"
+                to="/dashboard/req-users"
                  className="bg-[#8a9866] text-white font-semibold px-4 py-2 rounded ml-4 hover:bg-[#78845a]"
               >
                 Dashboard

@@ -48,15 +48,15 @@ const UserCourses = () => {
               <Loader />
             ) : courses.length > 0 ? (
               <section className="py-6">
-                <div className="grid lg:grid-cols-2 grid-cols-1 gap-6 lg:gap-0 items-start justify-start w-full">
+                <div className="grid lg:grid-cols-2 grid-cols-1 gap-6 lg:gap-10 items-start justify-start w-full">
                   {courses.map((course, index) => (
                     <div
                       key={index}
-                      className={`lg:w-[370px] w-[90%] mx-auto shadow-lg text-center flex flex-col justify-center items-center rounded-md ${
+                      className={`lg:w-[370px] h-fit  w-[90%] mx-auto shadow-lg text-center flex flex-col  items-center rounded-md ${
                         courses.length === 1 ? "lg:col-span-2" : "" // Center card if there's only one
                       }`}
                     >
-                      <img src={course.image || "https://via.placeholder.com/300"} className="rounded-t-md" alt="Course" />
+                      <img src={course.image || "https://via.placeholder.com/300"} className="rounded-t-md lg:h-[250px] w-full" alt="Course" />
                       <h2 className="font-semibold text-[20px] py-4">{course.title}</h2>
                       <div className="mt-3 mb-6">
                         <Link

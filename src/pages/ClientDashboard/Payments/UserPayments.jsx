@@ -48,36 +48,34 @@ function UserPayments() {
                   key={index}
                   className="mt-7 detail-cont flex lg:flex-row flex-col lg:w-full w-[90%] bg-gray-200 py-10 px-14 rounded-md mb-5"
                 >
-                  <div className="detail-cont-a flex-1 flex lg:flex-row flex-col justify-around items-center">
+                  <div className="detail-cont-a flex-2 flex  flex-col justify-around items-center">
                     <div className="flex flex-col gap-5">
                       <h1 className="text-xl font-bold">
                         {ticket.courseId.title}
                       </h1>
-                      <div className="bg-white rounded-xl inline-block text-center w-[100px] font-semibold text-[#6bcaef] py-1 px-5">
-                        <h1>Start {ticket.startDate}</h1>
+                      <div className=" flex gap-3 items-center">
+                        <p className=" font-medium">Package :</p>
+                        <p className="text-xl font-bold">
+                          {ticket.packageId.packageName}
+                        </p>
                       </div>
+                      {/* <div className="bg-white rounded-xl inline-block text-center w-[100px] font-semibold text-[#6bcaef] py-1 px-5">
+                        <h1>Start {ticket.startDate}</h1>
+                      </div> */}
+                    </div>
+                  
+                  </div>
+                  <div className="flex-1 flex lg:flex-col flex-col gap-8 lg:gap-0 justify-end items-end">
+                    <div className="flex flex-col font-medium text-[#000000c1]"></div>
+                    <div className="lg:text-3xl text-2xl lg:h-16 flex justify-center items-center my-auto">
+                      <h1 className="bg-green-600 text-white rounded-full px-8 py-2 cursor-default">
+                        Paid
+                      </h1>
                     </div>
                     <div className="text-3xl flex items-center">
                       <h1 className="text-[#2c5872] font-bold flex">
                         ${ticket.packageId.price} + HST
                       </h1>
-                    </div>
-                  </div>
-                  <div className="flex-1 flex lg:flex-row flex-col gap-8 lg:gap-0 justify-around">
-                    <div className="flex flex-col font-medium text-[#000000c1]">
-                      <div className="flex gap-2 items-center">
-                        <FaLongArrowAltRight />
-                        <p>Duration: {ticket.duration}</p>
-                      </div>
-                      <div className="flex gap-2 items-center">
-                        <FaLongArrowAltRight />
-                        <p>{ticket.details}</p>
-                      </div>
-                    </div>
-                    <div className="lg:text-3xl text-2xl lg:h-16 flex justify-center items-center my-auto">
-                      <button className="bg-red-600 text-white rounded-full px-5 py-2 cursor-default">
-                        {ticket.status}
-                      </button>
                     </div>
                   </div>
                 </div>

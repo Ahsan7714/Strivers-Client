@@ -99,7 +99,7 @@ function NewPackage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const content = isFullCourse ? standardContent : premiumContent;
-    const packageType = isFullCourse ? "fullCourse" : "mocks";
+    const packageType = isFullCourse ? "fullCourse" : "mock";
     const payload = { ...content, packageType, courseId: selectedCourse };
 
     if (!isFullCourse) {

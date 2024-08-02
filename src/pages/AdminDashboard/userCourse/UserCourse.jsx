@@ -11,6 +11,8 @@ import AdminMobileNavbar from "../../../components/adminMobileNavbar/AdminMobile
 import { RiDeleteBinLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { getApprovedTickets,clearState ,removeUser } from "../../../store/reducers/adminReducers";
+import toast from "react-hot-toast";
+import Loader from "../../../components/Spinner/Loader";
 
 function UserCourse() {
   const dispatch = useDispatch();
@@ -31,6 +33,14 @@ function UserCourse() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    if (isUserRemoved) {
+      toast.success("User removed successfully!");
+      dispatch(getApprovedTickets());
+      dispatch(clearState());
+    }
+  }, [isUserRemoved, dispatch]);
+
   
 
   const handleFilterCourseChange = (event) => {
@@ -41,9 +51,9 @@ function UserCourse() {
     setFilterPackage(event.target.value);
   };
 
-  const handleDelete = (userId, courseId, packageId) => {
-    console.log(userId, courseId, packageId);
-    dispatch(removeUser({ userId, courseId, packageId }));
+  const handleDelete = (userId,packageId, courseId ) => {
+    // console.log(userId, courseId, packageId);
+    dispatch(removeUser({ userId,packageId ,courseId  }));
   };
 
   const filteredUsers = activeCourses.filter((user) => {
@@ -52,6 +62,10 @@ function UserCourse() {
       (filterPackage === "" || user.packageId.packageName === filterPackage)
     );
   });
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="flex font-outfit">
@@ -116,7 +130,7 @@ function UserCourse() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {filteredUsers.map((user, index) => (
+                    {filteredUsers && filteredUsers.length > 0 ?  (filteredUsers.map((user, index) => (
                       <TableRow
                         key={user.id}
                         className={index % 2 === 0 ? "bg-gray-100" : "bg-white"}
@@ -129,11 +143,16 @@ function UserCourse() {
                         <TableCell align="center">
                           <RiDeleteBinLine
                             className="bg-red-500 text-white  p-1 cursor-pointer ml-8 rounded-md text-3xl"
-                            onClick={() => handleDelete(user.id , user.packageId.id , user.courseId.id)}
+                            onClick={() => handleDelete(user.createdBy.id , user.packageId.id , user.courseId.id)}
                           />
                         </TableCell>
                       </TableRow>
-                    ))}
+                    )) ) : (    <TableRow>
+                      {" "}
+                      <TableCell colSpan={4} align="center">
+                        No Courses Available
+                      </TableCell>{" "}
+                    </TableRow>)}
                   </TableBody>
                 </Table>
               </TableContainer>

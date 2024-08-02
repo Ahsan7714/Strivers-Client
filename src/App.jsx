@@ -29,7 +29,7 @@ function App() {
         <Route path='/course/:id' element={<CourseDetails/>}/>
         {/* <Route path='/user/packages' element={<UserPackages/>}/> */}
         <Route path='/user/my-course' element={<MyCourse/>}/>
-        <Route path='/user/my-course/content' element={<MyCourseContent/>}/>
+        <Route path='/user/my-course/:courseId/:packageId' element={<MyCourseContent/>}/>
         <Route path='/user/courses' element={<UserCourses/>}/>
         <Route path='/user/payments' element={<UserPayments/>}/>
         <Route path='/user/profile' element={<UserProfile/>}/>

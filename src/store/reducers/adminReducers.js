@@ -12,6 +12,9 @@ const initialState = {
   isTicketUpdated: false,
   activeCourses : [],
   isUserRemoved : false,
+  isRequestDeleted : false,
+  isContentPosted: false,
+  isContentDeleted: false
 };
 
 // get all courses
@@ -104,9 +107,51 @@ export const removeUser = createAsyncThunk(
   "admin/removeUser",
   async (payload, { rejectWithValue, fulfillWithValue }) => {
     try {
-      const { userId, courseId, packageId } = payload;
+      const { userId,packageId, courseId,  } = payload;
       const { data } = await axios.delete(`${baseurl}/api/active-users`, {
-        data: { userId, courseId, packageId },
+        data: { userId,packageId ,courseId,  },
+        withCredentials: true,
+      });
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+// Delete a course request by admin
+export const deleteRequest = createAsyncThunk(
+  "admin/deleteRequest",
+  async (payload, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await axios.delete(`${baseurl}/api/tickets/${payload}`, {
+        withCredentials: true,
+      });
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+// post a new content
+export const postContent = createAsyncThunk(
+  "admin/postContent",
+  async (payload, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await axios.post(`${baseurl}/api/content`, payload, {
+        withCredentials: true,
+      });
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+// delete a content
+export const deleteContent = createAsyncThunk(
+  "admin/deleteContent",
+  async (payload, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await axios.delete(`${baseurl}/api/content/${payload}`, {
         withCredentials: true,
       });
       return fulfillWithValue(data);
@@ -131,21 +176,14 @@ export const adminReducer = createSlice({
       state.isTicketUpdated = false
       state.activeCourses = [];
       state.activeCourses = [];
+      state.isUserRemoved = false;
+      state.isRequestDeleted = false;
+      state.isContentPosted = false;
+      state.isContentDeleted = false;
     },
   },
   extraReducers: (builder) => {
-    // get all consultations
-    // builder.addCase(getAllConsultations.pending, (state) => {
-    //   state.loading = true;
-    // });
-    // builder.addCase(getAllConsultations.fulfilled, (state, action) => {
-    //   state.loading = false;
-    //   state.consultationAlerts = action.payload;
-    // });
-    // builder.addCase(getAllConsultations.rejected, (state, action) => {
-    //   state.loading = false;
-    //   state.error = action.payload;
-    // });
+   
     // get all courses
     builder.addCase(getAllCourses.pending, (state) => {
       state.loading = true;
@@ -230,6 +268,45 @@ export const adminReducer = createSlice({
       state.isUserRemoved = true;
     });
     builder.addCase(removeUser.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    }
+    );
+    // delete a course request
+    builder.addCase(deleteRequest.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(deleteRequest.fulfilled, (state, action) => {
+      state.loading = false;
+      state.isRequestDeleted = true;
+    });
+    builder.addCase(deleteRequest.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    }
+    );
+    // post a new content
+    builder.addCase(postContent.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(postContent.fulfilled, (state, action) => {
+      state.loading = false;
+      state.isContentPosted = true;
+    });
+    builder.addCase(postContent.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    }
+    );
+    // delete a content
+    builder.addCase(deleteContent.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(deleteContent.fulfilled, (state, action) => {
+      state.loading = false;
+      state.isContentDeleted = true;
+    });
+    builder.addCase(deleteContent.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     }
