@@ -324,6 +324,7 @@ export const userReducer = createSlice({
     builder.addCase(logout.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload?.message;
+      
     });
     // update password
     builder.addCase(updatePassword.pending, (state) => {
