@@ -20,7 +20,6 @@ const MyCourseContent = () => {
 
   const openModal = (pdfLink) => {
     setSelectedPdf(pdfLink);
-    console.log(pdfLink);
     setIsModalOpen(true);
   };
 
@@ -40,6 +39,32 @@ const MyCourseContent = () => {
   useEffect(() => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Function to hide the pop-out button
+  const hidePopOutButton = () => {
+    const iframe = document.querySelector('.video-wrapper iframe');
+    if (iframe) {
+      const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+      if (iframeDocument) {
+        const style = document.createElement('style');
+        style.innerHTML = `
+          .ndfHFb-c4YZDc-LgbsSe-Bz112c {
+            display: none !important;
+          }
+        `;
+        iframeDocument.head.appendChild(style);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const iframe = document.querySelector('.video-wrapper iframe');
+    if (iframe) {
+      iframe.onload = () => {
+        setTimeout(hidePopOutButton, 500); // Delay to ensure iframe content is loaded
+      };
+    }
   }, []);
 
   return (
@@ -75,13 +100,13 @@ const MyCourseContent = () => {
                       )}
                       {item.pdfLink && (
                         <>
-                        <button
-                          onClick={() => openModal(item.pdfLink)}
-                          className="bg-blue-500 text-white py-2 px-4 rounded"
+                          <button
+                            onClick={() => openModal(item.pdfLink)}
+                            className="bg-blue-500 text-white py-2 px-4 rounded"
                           >
-                          View PDF
-                        </button>
-                          </>
+                            View PDF
+                          </button>
+                        </>
                       )}
                       {item.mockLink && (
                         <a
@@ -100,9 +125,22 @@ const MyCourseContent = () => {
             ) : (
               <p>No content available.</p>
             )}
-           <iframe src="https://drive.google.com/file/d/13cIoz3x88w23yR7od6liz6xGpChTQGRx/preview" width="640" height="480" allow="autoplay"></iframe>
-            {/* <video src="https://drive.google.com/file/d/1d0HP4Z-evNDbAklxFk4_HjXE9x0oN7Ml/view?usp=drivesdk">gh</video> */}
+             <div className="video-wrapper relative video-crop">
+              <iframe
+                src="https://drive.google.com/file/d/13cIoz3x88w23yR7od6liz6xGpChTQGRx/preview"
+                width="100%"
+                height="480"
+                frameBorder="0"
+                allowFullScreen
+                className=' z-0'
+              ></iframe>
+              <div className='watermark z-50' >
+                <p>Ahsan</p>
+                <p>ahsan@gmail.com</p>
 
+              </div>
+              <div/>
+            </div>
           </div>
         </div>
       </div>

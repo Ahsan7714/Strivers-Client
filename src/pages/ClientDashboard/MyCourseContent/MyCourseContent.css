@@ -84,4 +84,37 @@
     background-color: #427590;
     border-radius: 4px;
   }
+  .video-crop {
+    position: relative;
+    overflow: hidden;
+    height: 490px; /* Adjust the height as needed */
+  }
+  
+  .video-crop iframe {
+    position: absolute;
+    top: -60px; /* Adjust this value to hide the top portion */
+    left: 0;
+    width: 100%;
+    height: 540px; /* Adjust this value to fit the content */
+  }
+  .video-wrapper {
+    position: relative;
+  }
+  
+  .watermark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: rgba(0, 0, 0, 0.2);
+    font-size: 2rem;
+    font-weight: bold;
+    transform: rotate(-40deg);
+    pointer-events: none;
+  }
   
