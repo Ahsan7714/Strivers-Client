@@ -109,13 +109,11 @@ const RegisterModal = ({ isOpen, onClose, event, course, selectedMocks }) => {
         nonce: token.token,
         amount: pricePaid,
       });
-      console.log("response", response);
 
-      alert("Payment Successful and Request Submitted");
 
       if (response.data.statusCode === 200) {
         const courseRequestData = {
-          receiptLink: response.data.data.receipt_url,
+          receiptLink: response.data.result.payment.receiptUrl,
           courseId: course.id,
           packageId: event.packageId.id,
           mocksPurchased: selectedMocks.mockCount,
