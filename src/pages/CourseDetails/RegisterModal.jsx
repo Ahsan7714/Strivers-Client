@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
 import { IoMdClose } from "react-icons/io";
 import { FaLongArrowAltRight } from "react-icons/fa";
@@ -113,6 +114,10 @@ const RegisterModal = ({ isOpen, onClose, event, course, selectedMocks }) => {
       event.packageId.packageType === "mock"
         ? selectedMocks.mockPrice
         : event.packageId.price;
+
+    console.log(selectedMocks.mockCount);
+
+    alert("asd");
 
     try {
       const response = await axios.post(`${baseurl}/create-checkout-session`, {

@@ -125,7 +125,9 @@ function RequestUser() {
                           <TableCell align="center">
                           
                           {user.paidThrough === "square" ? (
-                            <a href={user.receiptLink}>Receipt Link</a>
+                            <a href={user.receiptLink}
+                            className="underline text-blue-500" target="_blank" 
+                            >Receipt Link</a>
                           ) : (
                             user.email
                           )}
@@ -181,7 +183,7 @@ function RequestUser() {
               <strong>Package:</strong> {selectedUser.packageId.packageName}
             </p>
             <p className="mt-4">
-              <strong>Mocks Purchased:</strong> {selectedUser.mocksPurcahsed}
+              <strong>Mocks Purchased:</strong> {selectedUser.mocksPurchased}
             </p>
             {/* <p className="mt-4">
               <strong>Account Name:</strong> {selectedUser.accountName}
