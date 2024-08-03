@@ -319,6 +319,7 @@ export const userReducer = createSlice({
     builder.addCase(logout.fulfilled, (state, action) => {
       state.loading = false;
       state.isLoggedOut = true;
+      state.user = null;
     });
     builder.addCase(logout.rejected, (state, action) => {
       state.loading = false;

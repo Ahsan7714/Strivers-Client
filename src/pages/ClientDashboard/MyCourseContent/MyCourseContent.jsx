@@ -51,6 +51,7 @@ const MyCourseContent = () => {
         style.innerHTML = `
           .ndfHFb-c4YZDc-LgbsSe-Bz112c {
             display: none !important;
+            z-index: -1;
           }
         `;
         iframeDocument.head.appendChild(style);
@@ -69,6 +70,7 @@ const MyCourseContent = () => {
 
   return (
     <>
+   
       <UserNavbar />
       <div className="flex lg:w-[80%] w-full lg:mx-auto my-5 border border-[#00000023] lg:h-[80vh] h-fit rounded-md">
         {screenSize > 786 ? <UserSidebar /> : <MobileNavbar />}
