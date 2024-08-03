@@ -124,7 +124,7 @@ function RequestUser() {
                           <TableCell align="center">{index + 1}</TableCell>
                           <TableCell align="center">
                           
-                          {user.paidThrough === "sqaure" ? (
+                          {user.paidThrough === "square" ? (
                             <a href={user.receiptLink}>Receipt Link</a>
                           ) : (
                             user.email
