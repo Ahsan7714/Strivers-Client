@@ -5,7 +5,7 @@ import { loadUser } from '../../../store/reducers/userReducers';
 import { useDispatch, useSelector } from 'react-redux';
 
 const WaterMark = ({ fileUrl }) => {
-  const proxyUrl = 'https://github.com/AQIB-NAWAB/dental-backend/proxy?url=';
+  const proxyUrl = 'https://dental-backend.vercel.app/proxy?url=';
   const proxiedFileUrl = `${proxyUrl}${encodeURIComponent(fileUrl)}`;
   const dispatch = useDispatch();
     const { user } = useSelector((state) => state.user);
