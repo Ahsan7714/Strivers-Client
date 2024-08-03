@@ -220,7 +220,7 @@ const RegisterModal = ({ isOpen, onClose, event, course, selectedMocks }) => {
                   <div className="flex justify-between pt-4 border-t border-[#00000066]">
                     <h1 className="text-[20px] font-medium">Total:</h1>
                     <h1 className="font-bold text-[20px]">
-                      ${selectedMocks.mockPrice}.00
+                    ${selectedMocks.mockPrice + (selectedMocks.mockPrice * 0.15)}
                     </h1>
                   </div>
                 </div>
