@@ -122,7 +122,16 @@ function RequestUser() {
                           }
                         >
                           <TableCell align="center">{index + 1}</TableCell>
-                          <TableCell align="center">{user.email}</TableCell>
+                          <TableCell align="center">
+                          
+                          {user.paidThrough === "sqaure" ? (
+                            <a href={user.receiptLink}>Receipt Link</a>
+                          ) : (
+                            user.email
+                          )}
+
+                          
+                          </TableCell>
                           <TableCell align="center">
                             {user.packageId.packageName}
                           </TableCell>
