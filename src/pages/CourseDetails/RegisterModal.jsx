@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import Loader from "../../components/Spinner/Loader";
 import { CreditCard, PaymentForm } from "react-square-web-payments-sdk";
 import axios from "axios";
+import baseurl from "../../store/baseurl";
 
 const RegisterModal = ({ isOpen, onClose, event, course, selectedMocks }) => {
   const dispatch = useDispatch();
@@ -104,15 +105,17 @@ const RegisterModal = ({ isOpen, onClose, event, course, selectedMocks }) => {
       event.packageId.packageType === "mock" ? selectedMocks.mockPrice : event.packageId.price;
 
     try {
-      const response = await axios.post("http://localhost:3000/create-checkout-session", {
+      const response = await axios.post(`${baseurl}/create-checkout-session`, {
         nonce: token.token,
         amount: pricePaid,
       });
       console.log("response", response);
 
+      alert("Payment Successful and Request Submitted");
+
       if (response.data.statusCode === 200) {
         const courseRequestData = {
-          // email,
+          receiptLink: response.data.data.receipt_url,
           courseId: course.id,
           packageId: event.packageId.id,
           mocksPurchased: selectedMocks.mockCount,
