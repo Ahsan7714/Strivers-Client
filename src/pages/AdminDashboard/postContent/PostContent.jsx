@@ -10,6 +10,9 @@ import {
   getAllCourses,
 } from "../../../store/reducers/adminReducers";
 import toast from "react-hot-toast";
+import { cloudinaryConfig } from "../../../cloudinaryConfig";
+import axios from 'axios';
+
 
 function PostContent() {
   const dispatch = useDispatch();
@@ -24,10 +27,10 @@ function PostContent() {
   const [selectedPackageTitle, setSelectedPackageTitle] = useState(
     "Select a package..."
   );
+
   const [uploadProgress, setUploadProgress] = useState(0);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [pkgdropdownOpen, setPkgdropdownOpen] = useState(false);
-  const [fileData, setFileData] = useState({ file: null, title: "" });
   const [mocks, setMocks] = useState({
     weekNo: "",
     lectureNo: "",
@@ -84,6 +87,7 @@ function PostContent() {
       setSelectedPackage("");
       setSelectedCourseTitle("Select a course...");
       setSelectedPackageTitle("Select a package...");
+      // empty pdf file
 
     }
     if (error) {
@@ -129,30 +133,34 @@ function PostContent() {
     setPkgdropdownOpen(false);
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
 
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
-          toast.error(`File size exceeds the limit of ${MAX_FILE_SIZE_MB}MB`);
-        } else {
-          setFileData({
-            title: file.name,
-            file: reader.result,
-          });
-          setShowBtn(true);
+  const handleUploadToCloudinary = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", cloudinaryConfig.uploadPreset);
+  
+    try {
+      const response = await axios.post(
+        `https://api.cloudinary.com/v1_1/${cloudinaryConfig.cloudName}/upload`,
+        formData,
+        {
+          onUploadProgress: (progressEvent) => {
+            const progress = (progressEvent.loaded / progressEvent.total) * 100;
+            setUploadProgress(progress);
+            console.log(`Upload is ${progress}% done`);
+          },
         }
-      }
-    };
-
-    if (file) {
-      reader.readAsDataURL(file);
+      );
+      return response.data.secure_url;
+    } catch (error) {
+      console.error("Error uploading file to Cloudinary", error);
+      toast.error("Error uploading file");
+      return null;
     }
   };
+  
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const contentData = isFullCourse
@@ -171,39 +179,17 @@ function PostContent() {
           packageId: selectedPackage,
         };
 
-    if (isFullCourse && fullCourse.pdf) {
-      const storageRef = ref(storage, `pdfs/${fullCourse.pdf.name}`);
-      const uploadTask = uploadBytesResumable(storageRef, fullCourse.pdf);
-
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setUploadProgress(progress);
-          console.log(`Upload is ${progress}% done`);
-        },
-        (error) => {
-          console.error(error);
-          toast.error("Error uploading file");
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            contentData.pdfLink = downloadURL;
+        if (isFullCourse && fullCourse.pdf) {
+          const pdfUrl = await handleUploadToCloudinary(fullCourse.pdf);
+          if (pdfUrl) {
+            contentData.pdfLink = pdfUrl;
             contentData.contentType = "pdf";
-            dispatch(postContent(contentData));
-            setUploadProgress(0); // Reset progress after upload is complete
-          });
+          }
+          setUploadProgress(0); // Reset progress after upload is complete
         }
-      );
-    } else {
-      if (isFullCourse) {
-        contentData.contentType = "zoom";
-      } else {
-        contentData.contentType = "mock";
-      }
-      dispatch(postContent(contentData));
-    }
+        
+
+    dispatch(postContent(contentData));
   };
 
   const handleCoursesChange = (courseId, courseTitle) => {
@@ -393,16 +379,9 @@ function PostContent() {
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   />
                   {uploadProgress > 0 && (
-                    <div className="mb-4">
-                      <label className="block text-sm font-medium text-gray-700">
-                        Upload Progress
-                      </label>
-                      <div className="w-full bg-gray-200 rounded-full h-2.5">
-                        <div
-                          className="bg-[#93ae50] h-2.5 rounded-full"
-                          style={{ width: `${uploadProgress}%` }}
-                        ></div>
-                      </div>
+                    <div className="mt-2">
+                      <progress className="w-full" value={uploadProgress} max="100"></progress>
+                      <p className="text-center text-sm text-gray-500">{uploadProgress.toFixed(2)}% uploaded</p>
                     </div>
                   )}
                 </div>

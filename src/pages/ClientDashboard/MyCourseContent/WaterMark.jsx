@@ -62,7 +62,7 @@ const WaterMark = ({ fileUrl }) => {
 
   return (
     <Worker workerUrl={`https://unpkg.com/pdfjs-dist@3.0.279/build/pdf.worker.min.js`}>
-      <Viewer fileUrl={proxiedFileUrl} renderPage={renderPage} />
+      <Viewer fileUrl={fileUrl} renderPage={renderPage} />
     </Worker>
   );
 };
