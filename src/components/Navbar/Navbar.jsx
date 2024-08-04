@@ -12,8 +12,9 @@ const Navbar = () => {
   const { user, loading, error } = useSelector(state => state.user);
 
   useEffect(() => {
-    dispatch(loadUser());
-  }, [dispatch]);
+  
+    // dispatch(loadUser());
+  }, []);
 
   const handleShowPopUp = (actionType) => {
     setType(actionType);

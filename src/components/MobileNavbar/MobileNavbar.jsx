@@ -1,26 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import './MobileNavbar.css';
 import { FaBars } from "react-icons/fa6";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
 import logo from "../../assets/toplogo.png";
-
+import { logout , clearState } from '../../store/reducers/userReducers';
 import { toast } from "react-hot-toast";
+import { useDispatch , useSelector } from "react-redux";
 
 
 
 const MobileNavbar = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
+
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const { isLoggedOut , loading , error } = useSelector((state) => state.user);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
+  useEffect(() => {
+    if (isLoggedOut) {
+      toast.success("Logged out successfully");
+      navigate("/");
+      dispatch(clearState());
+    }
+  }, [isLoggedOut, navigate]);
 
+  
   const handleLogout = () => {
-    toast.success("Logged out successfully");
-    navigate("/");
+    dispatch(logout());
+    // toast.success("Logged out successfully");
+    // navigate("/");
   };
 
   return (

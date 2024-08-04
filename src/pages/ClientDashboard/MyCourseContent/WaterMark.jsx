@@ -10,7 +10,7 @@ const WaterMark = ({ fileUrl }) => {
   const dispatch = useDispatch();
     const { user } = useSelector((state) => state.user);
     useEffect(() => {
-        dispatch(loadUser());
+        // dispatch(loadUser());
     }, [dispatch]);
 
   const renderPage = (props) => (

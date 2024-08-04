@@ -56,6 +56,7 @@ export const logout = createAsyncThunk(
         const { data } = await axios.post(`${baseurl}/api/users/signout`, {
           withCredentials: true,
         });
+        document.cookie = "session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         return fulfillWithValue(data);
       } catch (error) {
         return rejectWithValue(error.response.data);

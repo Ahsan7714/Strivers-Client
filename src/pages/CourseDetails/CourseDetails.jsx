@@ -10,10 +10,9 @@ import { useParams } from "react-router-dom";
 import RegisterModal from "./RegisterModal";
 
 const CourseDetails = () => {
-  
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { loading, error, course,user } = useSelector((state) => state.user);
+  const { loading, error, course, user } = useSelector((state) => state.user);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [mockCount, setMockCount] = useState(0);
@@ -37,30 +36,17 @@ const CourseDetails = () => {
   };
 
   const openModal = (event) => {
-    // Open Google Form in a new tab
-    // window.open("https://docs.google.com/forms/d/e/1FAIpQLSeGACBjgIDaoR2EKlYYcVYqi6cibN_mSmBlYGMMo3UGjgrC2Q/viewform", "_blank");
-
-   
-      setSelectedCourse(event);
-      setModalIsOpen(true);
- 
-
-    if(!user){
-      toast.error("Please login to register for the course");
-      return ;
-    }
-
-
-      setSelectedCourse(event);
-      setModalIsOpen(true);
+    setSelectedCourse(event);
+    setModalIsOpen(true);
   };
 
   const closeModal = () => {
     setModalIsOpen(false);
     setSelectedCourse(null);
   };
-  if(loading){
-    return <Loader />
+
+  if (loading) {
+    return <Loader />;
   }
 
   return (
@@ -183,12 +169,12 @@ const CourseDetails = () => {
           )}
         </div>
         <RegisterModal
-            isOpen={modalIsOpen}
-            onClose={closeModal}
-            event={selectedCourse}
-            course={course}
-            selectedMocks={{ mockCount, mockPrice }}
-          />
+          isOpen={modalIsOpen}
+          onClose={closeModal}
+          event={selectedCourse}
+          course={course}
+          selectedMocks={{ mockCount, mockPrice }}
+        />
       </section>
       <Footer />
     </>

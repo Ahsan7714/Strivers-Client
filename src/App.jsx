@@ -1,4 +1,4 @@
-import { useState } from 'react'
+// import { useState } from 'react'
 import {Routes , Route} from 'react-router-dom'
 import './App.css'
 import Home from './pages/Home/Home'
@@ -17,8 +17,19 @@ import CourseDetails from './pages/CourseDetails/CourseDetails'
 import UserPayments from './pages/ClientDashboard/Payments/UserPayments'
 import UserProfile from './pages/ClientDashboard/UserProfile/UserProfile'
 import NewPackage from './pages/AdminDashboard/newPackage/NewPackage'
+import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { loadUser } from './store/reducers/userReducers'
 
 function App() {
+  const dispatch = useDispatch();
+  const { user, loading, error } = useSelector(state => state.user);
+
+  useEffect(() => {
+  
+    dispatch(loadUser());
+  }, []);
+
 
   return (
     <>
