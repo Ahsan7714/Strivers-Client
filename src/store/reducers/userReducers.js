@@ -319,10 +319,14 @@ export const userReducer = createSlice({
     builder.addCase(logout.fulfilled, (state, action) => {
       state.loading = false;
       state.isLoggedOut = true;
+      state.user = null;
+      state.isSignedIn = false;
+      state.isSignedUp = false;
     });
     builder.addCase(logout.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload?.message;
+
     });
     // update password
     builder.addCase(updatePassword.pending, (state) => {

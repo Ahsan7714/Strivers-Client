@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
 import { IoMdClose } from "react-icons/io";
 import { FaLongArrowAltRight } from "react-icons/fa";
@@ -6,16 +7,23 @@ import { Link, useParams } from "react-router-dom";
 import "./CourseDetails.css";
 import sq from "../../assets/sqaure.png";
 import { useDispatch, useSelector } from "react-redux";
-import { requestCourse, clearState, getCourse } from "../../store/reducers/userReducers";
+import {
+  requestCourse,
+  clearState,
+  getCourse,
+} from "../../store/reducers/userReducers";
 import toast from "react-hot-toast";
 import Loader from "../../components/Spinner/Loader";
 import { CreditCard, PaymentForm } from "react-square-web-payments-sdk";
 import axios from "axios";
+import baseurl from "../../store/baseurl";
 
 const RegisterModal = ({ isOpen, onClose, event, course, selectedMocks }) => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { loading, error, isRequestSubmitted } = useSelector((state) => state.user);
+  const { loading, error, isRequestSubmitted } = useSelector(
+    (state) => state.user
+  );
   const [inputLoading, setInputLoading] = useState(true);
 
   const [formData, setFormData] = useState({
@@ -66,7 +74,9 @@ const RegisterModal = ({ isOpen, onClose, event, course, selectedMocks }) => {
     e.preventDefault();
     const { email, paidThrough, cardNumber } = formData;
     const pricePaid =
-      event.packageId.packageType === "mock" ? selectedMocks.mockPrice : event.packageId.price;
+      event.packageId.packageType === "mock"
+        ? selectedMocks.mockPrice
+        : event.packageId.price;
 
     const courseRequestData = {
       email,
@@ -101,18 +111,23 @@ const RegisterModal = ({ isOpen, onClose, event, course, selectedMocks }) => {
   const handleCardTokenizeResponse = async (token) => {
     const { email } = formData;
     const pricePaid =
-      event.packageId.packageType === "mock" ? selectedMocks.mockPrice : event.packageId.price;
+      event.packageId.packageType === "mock"
+        ? selectedMocks.mockPrice
+        : event.packageId.price;
+
+    console.log(selectedMocks.mockCount);
+
+    alert("asd");
 
     try {
-      const response = await axios.post("http://localhost:3000/create-checkout-session", {
+      const response = await axios.post(`${baseurl}/create-checkout-session`, {
         nonce: token.token,
         amount: pricePaid,
       });
-      console.log("response", response);
 
       if (response.data.statusCode === 200) {
         const courseRequestData = {
-          // email,
+          receiptLink: response.data.result.payment.receiptUrl,
           courseId: course.id,
           packageId: event.packageId.id,
           mocksPurchased: selectedMocks.mockCount,
@@ -135,7 +150,7 @@ const RegisterModal = ({ isOpen, onClose, event, course, selectedMocks }) => {
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-6 rounded-md lg:w-[80%] lg:h-fit h-[95vh] overflow-y-auto shadow-lg">
-        <div >
+        <div>
           <div className="flex justify-between items-center">
             <h2 className="text-[24px] font-semibold">Dental Strivers</h2>
             <button onClick={onClose}>
@@ -205,7 +220,7 @@ const RegisterModal = ({ isOpen, onClose, event, course, selectedMocks }) => {
                   <div className="flex justify-between pt-4 border-t border-[#00000066]">
                     <h1 className="text-[20px] font-medium">Total:</h1>
                     <h1 className="font-bold text-[20px]">
-                      ${selectedMocks.mockPrice}.00
+                    ${selectedMocks.mockPrice + (selectedMocks.mockPrice * 0.15)}
                     </h1>
                   </div>
                 </div>
@@ -220,8 +235,9 @@ const RegisterModal = ({ isOpen, onClose, event, course, selectedMocks }) => {
                   <div className="flex justify-between pt-4 border-t border-[#00000066]">
                     <h1 className="text-[20px] font-medium">Total :</h1>
                     <h1 className="font-bold text-[20px]">
-                      ${event.packageId.price}.00
-                    </h1>
+  ${event.packageId.price + (event.packageId.price * 0.15)}
+</h1>
+
                   </div>
                 </div>
               )}
@@ -233,15 +249,17 @@ const RegisterModal = ({ isOpen, onClose, event, course, selectedMocks }) => {
               <div>
                 <div className="flex gap-5 py-3 mx-auto justify-center w-full items-center">
                   <button
-                    className={`bg-[#2c5872] text-white px-5 py-2 rounded-md ${activeAccordion === "e-transfer" ? "bg-[#1a3a53]" : ""
-                      }`}
+                    className={`bg-[#2c5872] text-white px-5 py-2 rounded-md ${
+                      activeAccordion === "e-transfer" ? "bg-[#1a3a53]" : ""
+                    }`}
                     onClick={handleETransferClick}
                   >
                     E-Transfer
                   </button>
                   <button
-                    className={`bg-[#2c5872] text-white px-5 py-2 rounded-md ${activeAccordion === "square" ? "bg-[#1a3a53]" : ""
-                      }`}
+                    className={`bg-[#2c5872] text-white px-5 py-2 rounded-md ${
+                      activeAccordion === "square" ? "bg-[#1a3a53]" : ""
+                    }`}
                     onClick={handleSquareImageClick}
                   >
                     Square
@@ -257,7 +275,9 @@ const RegisterModal = ({ isOpen, onClose, event, course, selectedMocks }) => {
                       <div className="flex flex-col text-center w-full">
                         <h1 className="font-medium pb-3">Pay us on</h1>
                         <div className="flex justify-between items-center px-1">
-                          <h1 className="text-[14px] font-medium">Account Name :</h1>
+                          <h1 className="text-[14px] font-medium">
+                            Account Name :
+                          </h1>
                           <h1>Dental Strivers</h1>
                         </div>
                         <div className="flex justify-between px-1">
@@ -267,54 +287,53 @@ const RegisterModal = ({ isOpen, onClose, event, course, selectedMocks }) => {
                       </div>
                     </div>
                     <div>
-                <h1 className="text-center">Your Details</h1>
-                <input
-                  type="text"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Enter Your Email"
-                  className="my-3 outline-none border w-[80%] border-[#00000073] rounded p-2"
-                />
-               
-              </div>
+                      <h1 className="text-center">Your Details</h1>
+                      <input
+                        type="text"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="Enter Your Email"
+                        className="my-3 outline-none border w-[80%] border-[#00000073] rounded p-2"
+                      />
+                    </div>
                     <div className="capitalize">
-                  <div className="flex items-center gap-3">
-                    <input
-                      type="checkbox"
-                      required
-                      className="custom-checkbox"
-                      name="consultationFeePaid"
-                    />
-                    <p>I paid registration fee.</p>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <input
-                      type="checkbox"
-                      required
-                      className="custom-checkbox"
-                      name="accountNumberProvided"
-                    />
-                    <p>
-                      I have read and understand the features included in the
-                      selected package.
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <input
-                      type="checkbox"
-                      required
-                      className="custom-checkbox"
-                      name="contactInformationProvided"
-                    />
-                    <p>
-                      I agree with the{" "}
-                      <Link to="/privacy-policy" className="text-blue-500">
-                        privacy policy.
-                      </Link>
-                    </p>
-                  </div>
-                </div>
+                      <div className="flex items-center gap-3">
+                        <input
+                          type="checkbox"
+                          required
+                          className="custom-checkbox"
+                          name="consultationFeePaid"
+                        />
+                        <p>I paid registration fee.</p>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <input
+                          type="checkbox"
+                          required
+                          className="custom-checkbox"
+                          name="accountNumberProvided"
+                        />
+                        <p>
+                          I have read and understand the features included in
+                          the selected package.
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <input
+                          type="checkbox"
+                          required
+                          className="custom-checkbox"
+                          name="contactInformationProvided"
+                        />
+                        <p>
+                          I agree with the{" "}
+                          <Link to="/privacy-policy" className="text-blue-500">
+                            privacy policy.
+                          </Link>
+                        </p>
+                      </div>
+                    </div>
                     <div className="mt-3 flex justify-end">
                       <button
                         type="submit"
@@ -326,36 +345,33 @@ const RegisterModal = ({ isOpen, onClose, event, course, selectedMocks }) => {
                     </div>
                   </div>
                 )}
-  {activeAccordion === "square" && (
-  <div className="flex flex-col items-center mt-4">
-    <PaymentForm
-      applicationId="sandbox-sq0idb-XGlf2XRT6XhCZMXif5qlmQ"
-      cardTokenizeResponseReceived={handleCardTokenizeResponse}
-      locationId="LATG7YN8W4CTT"
-    >
-      {inputLoading ? (
-        <Loader />
-      ) : (
-        <CreditCard
-          buttonProps={{
-            css: {
-              backgroundColor: "#771520",
-              fontSize: "14px",
-              color: "#fff",
-              "&:hover": {
-                backgroundColor: "#530f16",
-              },
-            },
-          }}
-        />
-      )}
-    </PaymentForm>
-  </div>
-)}
-
-
+                {activeAccordion === "square" && (
+                  <div className="flex flex-col items-center mt-4">
+                    <PaymentForm
+                      applicationId="sandbox-sq0idb-XGlf2XRT6XhCZMXif5qlmQ"
+                      cardTokenizeResponseReceived={handleCardTokenizeResponse}
+                      locationId="LATG7YN8W4CTT"
+                    >
+                      {inputLoading ? (
+                        <Loader />
+                      ) : (
+                        <CreditCard
+                          buttonProps={{
+                            css: {
+                              backgroundColor: "#771520",
+                              fontSize: "14px",
+                              color: "#fff",
+                              "&:hover": {
+                                backgroundColor: "#530f16",
+                              },
+                            },
+                          }}
+                        />
+                      )}
+                    </PaymentForm>
+                  </div>
+                )}
               </div>
-              
             </div>
           </div>
         </div>

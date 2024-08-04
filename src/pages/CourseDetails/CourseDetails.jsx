@@ -10,9 +10,10 @@ import { useParams } from "react-router-dom";
 import RegisterModal from "./RegisterModal";
 
 const CourseDetails = () => {
+  
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { loading, error, course } = useSelector((state) => state.user);
+  const { loading, error, course,user } = useSelector((state) => state.user);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [mockCount, setMockCount] = useState(0);
@@ -43,6 +44,15 @@ const CourseDetails = () => {
       setSelectedCourse(event);
       setModalIsOpen(true);
  
+
+    if(!user){
+      toast.error("Please login to register for the course");
+      return ;
+    }
+
+
+      setSelectedCourse(event);
+      setModalIsOpen(true);
   };
 
   const closeModal = () => {

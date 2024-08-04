@@ -62,23 +62,29 @@ function PostContent() {
   useEffect(() => {
     if (isContentPosted) {
       toast.success("Content posted successfully");
-      // dispatch(clearState());
+      dispatch(clearState());
       // // clear the form
-      // setMocks({
-      //   weekNo: "",
-      //   lectureNo: "",
-      //   topic: "",
-      //   mockLink: "",
-      //   description: "",
-      // });
-      // setFullCourse({
-      //   weekNo: "",
-      //   lectureNo: "",
-      //   topic: "",
-      //   meetLink: "",
-      //   description: "",
-      //   pdfLink: "",
-      // });
+      setMocks({
+        weekNo: "",
+        lectureNo: "",
+        topic: "",
+        mockLink: "",
+        // description: "",
+      });
+      setFullCourse({
+        weekNo: "",
+        lectureNo: "",
+        topic: "",
+        meetLink: "",
+        // description: "",
+        pdfLink: "",
+      });
+
+      setSelectedCourse("");
+      setSelectedPackage("");
+      setSelectedCourseTitle("Select a course...");
+      setSelectedPackageTitle("Select a package...");
+
     }
     if (error) {
       toast.error(error);
