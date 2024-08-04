@@ -58,6 +58,8 @@ export const signIn = createAsyncThunk(
           {},
           { withCredentials: true } // Ensure credentials are included
         );
+        // remove the cookkie session from the cookies
+        document.cookie = "session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         return fulfillWithValue(data);
       } catch (error) {
         return rejectWithValue(error.response.data);
