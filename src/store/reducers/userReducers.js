@@ -49,13 +49,15 @@ export const signIn = createAsyncThunk(
     }
   );
   // log out
-export const logout = createAsyncThunk(
-    "/api/users/signout",
+  export const logout = createAsyncThunk(
+    '/api/users/signout',
     async (payload, { rejectWithValue, fulfillWithValue }) => {
       try {
-        const { data } = await axios.post(`${baseurl}/api/users/signout`, {
-          withCredentials: true,
-        });
+        const { data } = await axios.post(
+          `${baseurl}/api/users/signout`,
+          {},
+          { withCredentials: true } // Ensure credentials are included
+        );
         return fulfillWithValue(data);
       } catch (error) {
         return rejectWithValue(error.response.data);
