@@ -37,19 +37,21 @@ const CourseDetails = () => {
 
   const openModal = (event) => {
     // Open Google Form in a new tab
-    window.open("https://docs.google.com/forms/d/e/1FAIpQLSeGACBjgIDaoR2EKlYYcVYqi6cibN_mSmBlYGMMo3UGjgrC2Q/viewform", "_blank");
+    // window.open("https://docs.google.com/forms/d/e/1FAIpQLSeGACBjgIDaoR2EKlYYcVYqi6cibN_mSmBlYGMMo3UGjgrC2Q/viewform", "_blank");
 
-    // Delay setting the modal state to give time for the form to be filled out
-    setTimeout(() => {
+   
       setSelectedCourse(event);
       setModalIsOpen(true);
-    }, 5000); // Adjust the delay as needed
+ 
   };
 
   const closeModal = () => {
     setModalIsOpen(false);
     setSelectedCourse(null);
   };
+  if(loading){
+    return <Loader />
+  }
 
   return (
     <>
