@@ -134,9 +134,9 @@ const MyCourseContent = () => {
                 height="480"
                 frameBorder="0"
                 allowFullScreen
-                className=' z-0'
+                className=' '
               ></iframe>
-              <div className='watermark z-50' >
+              <div className='watermark' >
                 <p>Ahsan</p>
                 <p>ahsan@gmail.com</p>
 

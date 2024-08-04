@@ -37,6 +37,13 @@ const CourseDetails = () => {
   };
 
   const openModal = (event) => {
+    // Open Google Form in a new tab
+    // window.open("https://docs.google.com/forms/d/e/1FAIpQLSeGACBjgIDaoR2EKlYYcVYqi6cibN_mSmBlYGMMo3UGjgrC2Q/viewform", "_blank");
+
+   
+      setSelectedCourse(event);
+      setModalIsOpen(true);
+ 
 
     if(!user){
       toast.error("Please login to register for the course");
@@ -52,6 +59,9 @@ const CourseDetails = () => {
     setModalIsOpen(false);
     setSelectedCourse(null);
   };
+  if(loading){
+    return <Loader />
+  }
 
   return (
     <>
